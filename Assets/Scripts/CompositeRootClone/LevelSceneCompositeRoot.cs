@@ -1,0 +1,18 @@
+﻿using UnityEngine;
+
+namespace Assets.Scripts.CompositeRootClone
+{
+    public class LevelSceneCompositeRoot : MonoBehaviour
+    {
+        [SerializeField] private GunCompositeRoot _gunCompositeRoot;
+        [SerializeField] private CubeGroupCompositeRoot _cubeGroupCompositeRoot;
+        [SerializeField] private Bounds _levelBounds;
+
+        private void Awake()
+        {
+            _levelBounds.Init();
+            _gunCompositeRoot.Init();
+            _cubeGroupCompositeRoot.Init();
+        }
+    }
+}
