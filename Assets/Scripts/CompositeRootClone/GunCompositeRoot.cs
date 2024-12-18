@@ -15,13 +15,13 @@ namespace Assets.Scripts.CompositeRootClone
 
         public override void Init()
         {
-            ProjectileFactory factory = new ProjectileFactory(_projectileSettings);
-
-            GunView view = Instantiate(_gunSettings.GunPrefab, _gunSpawnPoint.position, _gunSpawnPoint.rotation);
             GunDynamicMovement gunMovement = new GunDynamicMovement(new GunStaticMovement(), _gunSettings.Speed, 7f);
-            BurstShootingSystem burstShootingSystem = new BurstShootingSystem(new Timers(_serviceUpdater), _gunSettings.ReloadTime);
-            Gun gun = new Gun(new SpaceOrientation(view.transform.position, view.transform.rotation), gunMovement, burstShootingSystem);
-            new GunPresenter(gun, view, _playerDesktopInput, _serviceUpdater, factory);
+            SingleShotSystem singleShotSystem = new SingleShotSystem(new Timers(_serviceUpdater), _gunSettings.ReloadTime);
+            BurstShootingSystem burst = new BurstShootingSystem(new Timers(_serviceUpdater), _gunSettings.ReloadTime);
+            Gun gun = new Gun(new SpaceOrientation(_gunSpawnPoint.position, _gunSpawnPoint.rotation), gunMovement, singleShotSystem);
+            ProjectileFactory factory = new ProjectileFactory(_projectileSettings);
+            GunView view = Instantiate(_gunSettings.GunPrefab);
+            GunPresenter gunPresenter = new GunPresenter(gun, view, _playerDesktopInput, _serviceUpdater, factory);
         }
     }
 }

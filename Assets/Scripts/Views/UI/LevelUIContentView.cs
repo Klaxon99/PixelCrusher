@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ModelsClone;
+using Assets.Scripts.PresentersClone;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class LevelUIContentView : MonoBehaviour
     [SerializeField] private RectTransform _parent;
 
     private List<LevelUIItemView> _contentItems;
+    private IPresenter _presenter;
 
     public event Action<Levels> LevelSelected;
 
@@ -21,8 +23,9 @@ public class LevelUIContentView : MonoBehaviour
 
     public RectTransform RectTransform => _parent;
 
-    public void Init(IEnumerable<LevelUIItemView> contentItems)
+    public void Init(IPresenter presenter, IEnumerable<LevelUIItemView> contentItems)
     {
+        _presenter = presenter;
         _contentItems = new List<LevelUIItemView>();
 
         foreach (LevelUIItemView item in contentItems)
@@ -34,6 +37,7 @@ public class LevelUIContentView : MonoBehaviour
             }
         }
 
+        _presenter.Enable();
         _closeButton.onClick.AddListener(OnCloseButtonClicked);
         _openButton.onClick.AddListener(OnOpenButtonClicked);
     }
@@ -47,6 +51,8 @@ public class LevelUIContentView : MonoBehaviour
 
         _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
         _openButton.onClick.RemoveListener(OnOpenButtonClicked);
+
+        _presenter.Disable();
     }
 
     private void OnOpenButtonClicked()

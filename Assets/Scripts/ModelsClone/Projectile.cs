@@ -7,10 +7,10 @@ namespace Assets.Scripts.ModelsClone
     {
         private readonly float _speed;
 
-        public Projectile(Vector3 startDirection, float speed)
+        public Projectile(Vector3 velocityDirection, float speed)
         {
             _speed = speed;
-            Velocity = startDirection.normalized * _speed;
+            Velocity = velocityDirection.normalized * _speed;
         }
 
         public Vector3 Velocity { get; private set; }

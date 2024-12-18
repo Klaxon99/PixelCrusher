@@ -15,6 +15,7 @@ namespace Assets.Scripts.ModelsClone
         }
 
         public event Action Emptied;
+
         public event Action<CubeGroup> Splited;
 
         public IEnumerable<Vector2> Items => _cubeMap;

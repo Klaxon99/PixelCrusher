@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CubesForm : MonoBehaviour, ICubeStorage
 {
-    private Dictionary<Vector2, CubeGroupItem> _cubes;
+    private Dictionary<Vector2, CubeGroupItemView> _cubes;
 
     public int ItemsCount => _cubes.Count;
 
@@ -12,17 +12,17 @@ public class CubesForm : MonoBehaviour, ICubeStorage
 
     public void Init()
     {
-        _cubes = new Dictionary<Vector2, CubeGroupItem>();
-        var childs = transform.GetComponentsInChildren<CubeGroupItem>();
+        _cubes = new Dictionary<Vector2, CubeGroupItemView>();
+        CubeGroupItemView[] childs = transform.GetComponentsInChildren<CubeGroupItemView>();
 
-        foreach (CubeGroupItem child in childs)
+        foreach (CubeGroupItemView child in childs)
         {
             child.Init();
             _cubes[child.GroupPosition] = child;
         }
     }
 
-    public CubeGroupItem GetItem(Vector2 position)
+    public CubeGroupItemView GetItem(Vector2 position)
     {
         return _cubes[position];
     }

@@ -1,62 +1,53 @@
 ﻿using System;
+using System.Linq;
 using Assets.Scripts.FactoriesClone;
+using Assets.Scripts.PresentersClone;
 
 namespace Assets.Scripts.ModelsClone
 {
-    public class CubeGroupPresenter
+    public class CubeGroupPresenter : IPresenter
     {
         private readonly CubeGroup _model;
         private readonly CubeGroupView _view;
         private readonly ICubeGroupFactory _factory;
 
-        public CubeGroupPresenter(CubeGroup model, CubeGroupView view, ICubeGroupFactory factory)
+        public CubeGroupPresenter(CubeGroup model, CubeGroupView view, ICubeGroupFactory factory, ICubeStorage cubeStorage)
         {
             _view = view ?? throw new ArgumentNullException();
             _factory = factory ?? throw new ArgumentNullException();
             _model = model ?? throw new ArgumentNullException();
 
-            Enable();
+            view.Init(this, model.Items.Select(item => cubeStorage.GetItem(item)));
         }
 
         public void Enable()
         {
-            _model.Emptied += OnEmptied;
-            _model.Splited += OnSplited;
-            _view.ItemDetached += OnDetached;
-            _view.ItemDestructed += OnItemDestructed;
+            _model.Emptied += OnGroupEmptied;
+            _model.Splited += OnGroupSplited;
+            _view.ItemDetached += OnItemDetached;
         }
 
         public void Disable()
         {
-            _model.Emptied -= OnEmptied;
-            _model.Splited -= OnSplited;
-            _view.ItemDetached -= OnDetached;
-
-            _factory.Destruct(_view);
+            _model.Emptied -= OnGroupEmptied;
+            _model.Splited -= OnGroupSplited;
+            _view.ItemDetached -= OnItemDetached;
         }
 
-        private void OnItemDestructed(CubeGroupItem item)
+        private void OnGroupSplited(CubeGroup model)
         {
-            item.gameObject.SetActive(false);
-            item.gameObject.GetComponent<CubeFreed>().enabled = true;
-
-
+            _factory.Create(model);
         }
 
-        private void OnSplited(CubeGroup group)
+        private void OnItemDetached(CubeGroupItemView cubeView)
         {
-            _factory.Create(group);
-        }
-
-        private void OnDetached(CubeGroupItem cubeView)
-        {
-            cubeView.Free();
             _model.Remove(cubeView.GroupPosition);
+            cubeView.Free();
         }
 
-        private void OnEmptied()
+        private void OnGroupEmptied()
         {
-            Disable();
+            _factory.Destruct(_view);
         }
     }
 }

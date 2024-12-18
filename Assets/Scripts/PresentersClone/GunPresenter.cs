@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.PresentersClone
 {
-    public class GunPresenter
+    public class GunPresenter : IPresenter
     {
         private readonly Gun _model;
         private readonly GunView _view;
@@ -21,10 +21,10 @@ namespace Assets.Scripts.PresentersClone
             _updateService = updateService ?? throw new ArgumentNullException();
             _projectileFactory = projectileFactory ?? throw new ArgumentNullException();
 
-            Enable();
+            _view.Init(this, _model.SpaceOrientation);
         }
 
-        protected void Enable()
+        public void Enable()
         {
             _model.Shot += OnShot;
             _model.SpaceOrientationChanged += OnSpaceOrientationChanged;
@@ -32,7 +32,7 @@ namespace Assets.Scripts.PresentersClone
             _updateService.Updated += OnUpdated;
         }
 
-        protected void Disable()
+        public void Disable()
         {
             _model.Shot -= OnShot;
             _model.SpaceOrientationChanged -= OnSpaceOrientationChanged;

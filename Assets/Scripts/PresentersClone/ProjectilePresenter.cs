@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.PresentersClone
 {
-    public class ProjectilePresenter
+    public class ProjectilePresenter : IPresenter
     {
         private readonly Projectile _model;
         private readonly ProjectileView _view;
@@ -18,29 +18,25 @@ namespace Assets.Scripts.PresentersClone
             _factory = projectileFactory;
             _projectileSettings = projectileSettings;
 
-            _view.SetVelocity(_model.Velocity);
-
-            Enable();
+            _view.Init(this, _model.Velocity);
         }
 
-        private void Enable()
+        public void Enable()
         {
             _model.VelocityChanged += OnVelocityChange;
             _view.CollisionEntered += OnCollisionEnter;
-            _view.Disabled += OnViewDisabled;
+            _view.Destructible += OnDestructible;
         }
 
-        private void Disable()
+        public void Disable()
         {
             _model.VelocityChanged -= OnVelocityChange;
             _view.CollisionEntered -= OnCollisionEnter;
-            _view.Disabled -= OnViewDisabled;
+            _view.Destructible -= OnDestructible;
         }
 
-        private void OnViewDisabled()
+        private void OnDestructible()
         {
-            Disable();
-
             _factory.Destroy(_view);
         }
 

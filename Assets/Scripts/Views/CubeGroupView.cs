@@ -1,60 +1,43 @@
-﻿using System;
+﻿using Assets.Scripts.PresentersClone;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Transform))]
 [RequireComponent(typeof(Rigidbody))]
-public class CubeGroupView : MonoBehaviour
+public class CubeGroupView : MonoBehaviour, ICubeGroup
 {
     private Transform _transform;
     private Rigidbody _rigidbody;
     private RigidbodyConstraints _constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
-    private List<CubeGroupItem> _items;
+    private IPresenter _presenter;
 
-    public event Action<CubeGroupItem> ItemDetached;
+    public event Action<CubeGroupItemView> ItemDetached;
 
-    public event Action<CubeGroupItem> ItemDestructed;
-
-    public void Init(IEnumerable<CubeGroupItem> items)
+    public void Init(IPresenter presenter, IEnumerable<CubeGroupItemView> items)
     {
         _transform = transform;
+        _presenter = presenter;
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.constraints = _constraints;
-        _items = new List<CubeGroupItem>();
 
-        foreach (CubeGroupItem item in items)
+        foreach (CubeGroupItemView item in items)
         {
             _rigidbody.mass++;
 
-            item.SetParent(_transform);
-            item.Detached += OnItemDetached;
-            item.Destructed += OnItemDestructed;
-
-            _items.Add(item);
+            item.SetGroup(this, _transform);
         }
+
+        presenter.Enable();
     }
 
-    private void OnItemDestructed(CubeGroupItem item)
+    private void OnDisable()
     {
-        item.Destructed -= OnItemDestructed;
-        OnItemDetached(item);
-
-        ItemDestructed?.Invoke(item);
+        _presenter.Disable();
     }
 
-    private void OnDestroy()
+    public void Detach(CubeGroupItemView cubeGroupItemView)
     {
-        foreach (CubeGroupItem item in _items)
-        {
-            item.Detached -= OnItemDetached;
-        }
-    }
-
-    public void OnItemDetached(CubeGroupItem item)
-    {
-        _rigidbody.mass--;
-        item.Detached -= OnItemDetached;
-        _items.Remove(item);
-        ItemDetached?.Invoke(item);
+        ItemDetached?.Invoke(cubeGroupItemView);
     }
 }

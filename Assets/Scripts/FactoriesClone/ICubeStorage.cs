@@ -7,6 +7,6 @@ namespace Assets.Scripts.FactoriesClone
     {
         IEnumerable<Vector2> ItemsPositions { get; }
 
-        CubeGroupItem GetItem(Vector2 position);
+        CubeGroupItemView GetItem(Vector2 position);
     }
 }

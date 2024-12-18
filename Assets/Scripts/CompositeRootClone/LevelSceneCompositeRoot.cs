@@ -11,8 +11,8 @@ namespace Assets.Scripts.CompositeRootClone
         private void Awake()
         {
             _levelBounds.Init();
-            _gunCompositeRoot.Init();
             _cubeGroupCompositeRoot.Init();
+            _gunCompositeRoot.Init();
         }
     }
 }

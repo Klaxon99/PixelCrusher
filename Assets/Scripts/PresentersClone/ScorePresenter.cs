@@ -1,62 +1,48 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Scripts.ModelsClone;
 
 namespace Assets.Scripts.PresentersClone
 {
-    public class ScorePresenter
+    public class ScorePresenter : IPresenter
     {
-        private readonly Score _model;
-        private readonly ScoreView _scoreView;
-        private readonly ScoreZoneView _scoreZoneView;
-        private readonly EndGameScreenView _endGameScreenView;
+        private readonly Score _score;
+        private readonly ScoreView _view;
 
-        public ScorePresenter(Score model, ScoreView view, ScoreZoneView scoreZoneView, EndGameScreenView endGameScreenView)
+        public ScorePresenter(Score score, ScoreView view)
         {
-            _model = model ?? throw new ArgumentNullException();
-            _scoreView = view ?? throw new ArgumentNullException();
-            _scoreZoneView = scoreZoneView ?? throw new ArgumentNullException();
-            _endGameScreenView = endGameScreenView ?? throw new ArgumentNullException();
-
-            OnScoreChanded(_model.Count);
-
-            Enable();
+            _score = score;
+            _view = view;
         }
 
-        private void Enable()
+        public void Enable()
         {
-            _model.CountChanged += OnScoreChanded;
-            _scoreZoneView.TriggerEntered += OnTriggerEnter;
+            _score.CountChanged += OnScoreChanged;
+            _view.CollisionEntered += OnCollisionEnter;
         }
 
-        private void Disable()
+        public void Disable()
         {
-            _model.CountChanged -= OnScoreChanded;
-            _scoreZoneView.TriggerEntered -= OnTriggerEnter;
+            _score.CountChanged -= OnScoreChanged;
+            _view.CollisionEntered += OnCollisionEnter;
         }
 
-        private void OnTriggerEnter(Collider collider)
+        private void OnCollisionEnter(Collider collider)
         {
             if (collider.TryGetComponent(out IDestructible destructible))
             {
-                if (destructible is CubeGroupItem)
+                if (destructible is CubeGroupItemView)
                 {
-                    _model.Add();
+                    _score.Add();
                 }
 
                 destructible.Destruct();
             }
         }
 
-        private void OnScoreChanded(int count)
+        private void OnScoreChanged(int count)
         {
-            if (_model.Count == _model.MaxCount)
-            {
-                _endGameScreenView.Show();
-            }
-
-            _scoreView.SetScoreText(count);
-            _scoreView.SetProgressBar((float)count / _model.MaxCount);
+            _view.SetScoreText(count);
+            _view.SetProgressBar((float)count / _score.MaxCount);
         }
     }
 }

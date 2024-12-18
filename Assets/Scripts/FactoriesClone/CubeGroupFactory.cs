@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
 using Assets.Scripts.ModelsClone;
 
@@ -17,15 +16,14 @@ namespace Assets.Scripts.FactoriesClone
         public CubeGroupView Create(CubeGroup model)
         {
             CubeGroupView view = new GameObject("CubeGroup").AddComponent<CubeGroupView>();
-            view.Init(model.Items.Select(item => _cubeStorage.GetItem(item)));
-            new CubeGroupPresenter(model, view, this);
+            CubeGroupPresenter cubeGroupPresenter = new CubeGroupPresenter(model, view, this, _cubeStorage);
 
             return view;
         }
 
         public void Destruct(CubeGroupView cubeGroupView)
         {
-            GameObject.Destroy(cubeGroupView);
+            GameObject.Destroy(cubeGroupView.gameObject);
         }
     }
 }

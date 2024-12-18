@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ModelsClone;
+using Assets.Scripts.PresentersClone;
 using System;
 using UnityEngine;
 
@@ -9,17 +10,31 @@ public class ProjectileView : MonoBehaviour, IDestructible
 {
     private Rigidbody _rigidbody;
     private Transform _transform;
+    private IPresenter _presenter;
 
     public AudioSource AudioSource { get; private set; }
 
     public event Action<Collision> CollisionEntered;
-    public event Action Disabled;
+
+    public event Action Destructible;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _transform = transform;
+        _transform = _rigidbody.transform;
         AudioSource = GetComponent<AudioSource>();
+    }
+
+    public void Init(IPresenter presenter, Vector3 velocity)
+    {
+        _presenter = presenter;
+        _presenter.Enable();
+        SetVelocity(velocity);
+    }
+
+    private void OnDisable()
+    {
+        _presenter?.Disable();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -27,19 +42,18 @@ public class ProjectileView : MonoBehaviour, IDestructible
         CollisionEntered?.Invoke(collision);
     }
 
+    public void SetOrientation(SpaceOrientation spaceOrientation)
+    {
+        _transform.SetPositionAndRotation(spaceOrientation.Position, spaceOrientation.Rotation);
+    }
+
     public void SetVelocity(Vector3 velocity)
     {
         _rigidbody.velocity = velocity;
     }    
 
-    public void SetOrientation(SpaceOrientation spaceOrientation)
-    {
-        _transform.position = spaceOrientation.Position;
-        _transform.rotation = spaceOrientation.Rotation;
-    }
-
     public void Destruct()
     {
-        Disabled?.Invoke();
+        Destructible?.Invoke();
     }
 }

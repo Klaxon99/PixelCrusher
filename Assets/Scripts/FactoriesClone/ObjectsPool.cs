@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.ModelsClone;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ namespace Assets.Scripts.FactoriesClone
             _items = new Queue<T>();
         }
 
+        public int ItemsCount => _items.Count;
+
         public void AddItem(T item)
         {
             if (item == null)
@@ -28,13 +31,16 @@ namespace Assets.Scripts.FactoriesClone
 
         public T GetItem()
         {
+            T item;
+
             if (_items.Count > 0)
             {
-                return _items.Dequeue();
+                item = _items.Dequeue();
             }
-
-            T item = GameObject.Instantiate(_prefab);
-            item.gameObject.SetActive(false);
+            else
+            {
+                item = GameObject.Instantiate(_prefab);
+            }
 
             return item;
         }

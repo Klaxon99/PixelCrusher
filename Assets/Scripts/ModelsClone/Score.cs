@@ -37,13 +37,4 @@ namespace Assets.Scripts.ModelsClone
             CountChanged?.Invoke(Count);
         }
     }
-
-    public interface IScore
-    {
-        public event Action<int> CountChanged;
-
-        int Count { get; }
-
-        void Add();
-    }
 }
