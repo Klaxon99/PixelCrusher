@@ -17,8 +17,6 @@ namespace Assets.Scripts.PresentersClone
             _view = view;
             _factory = projectileFactory;
             _projectileSettings = projectileSettings;
-
-            _view.Init(this, _model.Velocity);
         }
 
         public void Enable()

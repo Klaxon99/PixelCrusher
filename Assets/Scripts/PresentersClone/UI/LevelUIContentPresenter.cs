@@ -1,6 +1,4 @@
 ﻿using Assets.Scripts.ModelsClone;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.PresentersClone

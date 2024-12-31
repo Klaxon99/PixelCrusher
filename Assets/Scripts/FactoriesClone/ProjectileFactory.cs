@@ -20,8 +20,11 @@ namespace Assets.Scripts.FactoriesClone
             Projectile model = new Projectile(spaceOrientation.Rotation * Vector3.forward, _projectileSettings.Speed);
             ProjectileView view = _pool.GetItem();
             view.gameObject.SetActive(true);
+            view.SetVelocity(model.Velocity);
             view.SetOrientation(spaceOrientation);
             ProjectilePresenter projectilePresenter = new ProjectilePresenter(model, view, this, _projectileSettings);
+
+            view.Init(projectilePresenter);
 
             return view;
         }

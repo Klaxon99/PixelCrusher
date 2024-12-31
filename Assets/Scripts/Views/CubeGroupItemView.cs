@@ -6,7 +6,7 @@ using UnityEngine;
 public class CubeGroupItemView : MonoBehaviour, ICubeGroupItem, IDestructible, IInteractable
 {
     private Transform _transform;
-    private CubeGroupView _cubeGroup;
+    private ICubeGroup _cubeGroup;
     private Rigidbody _rigidbody;
     private MovementTrack _movementTrack;
 
@@ -20,7 +20,7 @@ public class CubeGroupItemView : MonoBehaviour, ICubeGroupItem, IDestructible, I
         _movementTrack.enabled = false;
     }
 
-    public void SetGroup(CubeGroupView cubeGroup, Transform transform)
+    public void SetParentGroup(ICubeGroup cubeGroup, Transform transform)
     {
         _cubeGroup = cubeGroup ?? throw new ArgumentNullException();
         _transform.SetParent(transform);

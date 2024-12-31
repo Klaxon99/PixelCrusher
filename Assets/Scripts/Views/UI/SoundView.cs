@@ -1,24 +1,44 @@
-﻿using System;
+﻿using Assets.Scripts.PresentersClone;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class SoundView : MonoBehaviour, IPointerClickHandler
+public class SoundView : MonoBehaviour, IView, IPointerClickHandler
 {
-    [SerializeField] private Image _soundImage;
-    [SerializeField] private Sprite _enableSoundIcon;
-    [SerializeField] private Sprite _disableSoundIcon;
+    [SerializeField] private SoundSwitcher _soundSwitcher;
+
+    private IPresenter _presenter;
+
+    public event Action Muted;
+
+    public event Action Unmuted;
 
     public event Action Clicked;
 
-    public void SetEnabledIcon()
+    public void Init(IPresenter presenter)
     {
-        _soundImage.sprite = _enableSoundIcon;
+        _presenter = presenter;
+
+        _presenter.Enable();
     }
 
-    public void SetDisabledIcon()
+    private void OnDisable()
     {
-        _soundImage.sprite = _disableSoundIcon;
+        _presenter.Disable();
+    }
+
+    public void Mute()
+    {
+        _soundSwitcher.Mute();
+
+        Muted?.Invoke();
+    }
+
+    public void Unmute()
+    {
+        _soundSwitcher.Unmute();
+
+        Unmuted?.Invoke();
     }
 
     public void OnPointerClick(PointerEventData eventData)

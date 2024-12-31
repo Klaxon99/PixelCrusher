@@ -17,8 +17,23 @@ public class MainMenuCompositeRoot : MonoBehaviour
         LevelUIContent levelUIContent = new LevelUIContent(_levelsStorage, new PlayerData(2));
         IEnumerable<LevelUIItemView> availableLevels = levelUIContent.AvailableLevels.Select(item => _levelUIContentFactory.Create(item, _levelUIContentView.RectTransform, true));
         IEnumerable<LevelUIItemView> privateLevels = levelUIContent.PrivateLevels.Select(item => _levelUIContentFactory.Create(item, _levelUIContentView.RectTransform, false));
-
         LevelUIContentPresenter levelUIContentPresenter = new LevelUIContentPresenter(levelUIContent, _levelUIContentView);
-        _levelUIContentView.Init(levelUIContentPresenter, availableLevels.Union(privateLevels));
+
+        _levelUIContentView.SetContent(availableLevels.Union(privateLevels));
+        _levelUIContentView.Init(levelUIContentPresenter);
+
+        SoundSwitcher soundSwitcher = new SoundSwitcher(_soundSettings);
+        SoundPresenter soundPresenter = new SoundPresenter(soundSwitcher, _soundView);
+
+        if (_soundSettings.IsMute)
+        {
+            _soundView.Mute();
+        }
+        else
+        {
+            _soundView.Unmute();
+        }
+
+        _soundView.Init(soundPresenter);
     }
 }

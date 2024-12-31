@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Assets.Scripts.FactoriesClone;
 using Assets.Scripts.PresentersClone;
 
@@ -11,13 +10,11 @@ namespace Assets.Scripts.ModelsClone
         private readonly CubeGroupView _view;
         private readonly ICubeGroupFactory _factory;
 
-        public CubeGroupPresenter(CubeGroup model, CubeGroupView view, ICubeGroupFactory factory, ICubeStorage cubeStorage)
+        public CubeGroupPresenter(CubeGroup model, CubeGroupView view, ICubeGroupFactory factory)
         {
             _view = view ?? throw new ArgumentNullException();
             _factory = factory ?? throw new ArgumentNullException();
             _model = model ?? throw new ArgumentNullException();
-
-            view.Init(this, model.Items.Select(item => cubeStorage.GetItem(item)));
         }
 
         public void Enable()

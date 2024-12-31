@@ -1353,6 +1353,7 @@ MonoBehaviour:
   _soundImage: {fileID: 1046432477}
   _enableSoundIcon: {fileID: 21300000, guid: ee17ce0f87797464cb7e4dfe4fc36f61, type: 3}
   _disableSoundIcon: {fileID: 21300000, guid: 09cec55509c59b6449031bc4a841b123, type: 3}
+  _audioMixer: {fileID: 24100000, guid: fbd5c0c94984b0d4fa0bd18b49f38f63, type: 2}
 --- !u!1 &1127370343
 GameObject:
   m_ObjectHideFlags: 0

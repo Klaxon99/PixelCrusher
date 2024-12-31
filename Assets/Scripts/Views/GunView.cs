@@ -2,7 +2,7 @@
 using Assets.Scripts.PresentersClone;
 using UnityEngine;
 
-public class GunView : MonoBehaviour
+public class GunView : MonoBehaviour, IView
 {
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private Transform _gunTurret;
@@ -15,9 +15,8 @@ public class GunView : MonoBehaviour
 
     public AudioSource ShootSound => _shootSound;
 
-    public void Init(IPresenter presenter, SpaceOrientation spaceOrientation)
+    public void Init(IPresenter presenter)
     {
-        SetOrientation(spaceOrientation);
         _presenter = presenter;
         _presenter.Enable();
     }

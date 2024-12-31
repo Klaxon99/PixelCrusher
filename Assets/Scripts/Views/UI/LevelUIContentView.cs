@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
-public class LevelUIContentView : MonoBehaviour
+public class LevelUIContentView : MonoBehaviour, IView
 {
     [SerializeField] private Button _closeButton;
     [SerializeField] private Button _openButton;
@@ -23,19 +23,9 @@ public class LevelUIContentView : MonoBehaviour
 
     public RectTransform RectTransform => _parent;
 
-    public void Init(IPresenter presenter, IEnumerable<LevelUIItemView> contentItems)
+    public void Init(IPresenter presenter)
     {
         _presenter = presenter;
-        _contentItems = new List<LevelUIItemView>();
-
-        foreach (LevelUIItemView item in contentItems)
-        {
-            if (item.IsActive)
-            {
-                item.Clicked += OnLevelSelected;
-                _contentItems.Add(item);
-            }
-        }
 
         _presenter.Enable();
         _closeButton.onClick.AddListener(OnCloseButtonClicked);
@@ -53,6 +43,20 @@ public class LevelUIContentView : MonoBehaviour
         _openButton.onClick.RemoveListener(OnOpenButtonClicked);
 
         _presenter.Disable();
+    }
+
+    public void SetContent(IEnumerable<LevelUIItemView> items)
+    {
+        _contentItems = new List<LevelUIItemView>();
+
+        foreach (LevelUIItemView item in items)
+        {
+            if (item.IsActive)
+            {
+                item.Clicked += OnLevelSelected;
+                _contentItems.Add(item);
+            }
+        }
     }
 
     private void OnOpenButtonClicked()

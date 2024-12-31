@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Transform))]
 [RequireComponent(typeof(Rigidbody))]
-public class CubeGroupView : MonoBehaviour, ICubeGroup
+public class CubeGroupView : MonoBehaviour, IView, ICubeGroup
 {
     private Transform _transform;
     private Rigidbody _rigidbody;
@@ -14,21 +14,24 @@ public class CubeGroupView : MonoBehaviour, ICubeGroup
 
     public event Action<CubeGroupItemView> ItemDetached;
 
-    public void Init(IPresenter presenter, IEnumerable<CubeGroupItemView> items)
+    public void Init(IPresenter presenter)
     {
         _transform = transform;
         _presenter = presenter;
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.constraints = _constraints;
 
+        presenter.Enable();
+    }
+
+    public void SetChilds(IEnumerable<CubeGroupItemView> items)
+    {
         foreach (CubeGroupItemView item in items)
         {
             _rigidbody.mass++;
 
-            item.SetGroup(this, _transform);
+            item.SetParentGroup(this, _transform);
         }
-
-        presenter.Enable();
     }
 
     private void OnDisable()

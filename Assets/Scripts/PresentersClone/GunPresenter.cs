@@ -1,7 +1,6 @@
 ﻿using System;
 using Assets.Scripts.FactoriesClone;
 using Assets.Scripts.ModelsClone;
-using UnityEngine;
 
 namespace Assets.Scripts.PresentersClone
 {
@@ -20,8 +19,6 @@ namespace Assets.Scripts.PresentersClone
             _input = input ?? throw new ArgumentNullException();
             _updateService = updateService ?? throw new ArgumentNullException();
             _projectileFactory = projectileFactory ?? throw new ArgumentNullException();
-
-            _view.Init(this, _model.SpaceOrientation);
         }
 
         public void Enable()

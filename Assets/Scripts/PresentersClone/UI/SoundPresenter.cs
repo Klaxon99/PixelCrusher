@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Assets.Scripts.ModelsClone;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.PresentersClone
 {
-    public class SoundSwitchPresenter
+    public class SoundPresenter : IPresenter
     {
-        private readonly ISoundSwitcher _model;
+        private readonly GameSound _model;
         private readonly SoundView _view;
 
-        public SoundSwitchPresenter(ISoundSwitcher model, SoundView view)
+        public SoundPresenter(GameSound model, SoundView view)
         {
             _model = model;
             _view = view;
-
-            Enable();
         }
 
         public void Enable()
@@ -32,16 +31,17 @@ namespace Assets.Scripts.PresentersClone
 
         private void OnUnmuted()
         {
-            throw new NotImplementedException();
+            _view.Unmute();
         }
 
         private void OnMuted()
         {
-            throw new NotImplementedException();
+            _view.Mute();
         }
 
         private void OnClicked()
         {
+            _model.SwitchVolume();
         }
     }
 }
