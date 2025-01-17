@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33accec684e57ec4295e582439897562, type: 3}
+  m_Script: {fileID: 11500000, guid: 9488c24acd3ef594a9f8ad779f9fdcf1, type: 3}
   m_Name: Avocado
   m_EditorClassIdentifier: 
   <Image>k__BackingField: {fileID: 21300000, guid: 1b94894e786deb544a0b59d04985d9cd, type: 3}
-  <Text>k__BackingField: Avocado
-  <Level>k__BackingField: 1
+  <SceneName>k__BackingField: Avocado
+  <SceneId>k__BackingField: 3
+  NextLevel: {fileID: 11400000, guid: 189daad4319fac1479bee1c98aa188bc, type: 2}

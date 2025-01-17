@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ModelsClone;
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,17 +10,17 @@ public class LevelUIItemView : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text _contentText;
     [SerializeField] private Image _lockImage;
 
-    public event Action<Levels> Clicked;
+    private Level _level;
 
-    public Levels Level {  get; private set; }
+    public event Action<Level> Clicked;
 
     public bool IsActive { get; private set; }
 
-    public void Init(Sprite image, string text, Levels level, bool isActive)
+    public void Init(Level level, bool isActive)
     {
-        _contentImage.sprite = image;
-        _contentText.text = text;
-        Level = level;
+        _level = level;
+        _contentImage.sprite = level.Image;
+        _contentText.text = level.SceneName;
         IsActive = isActive;
 
         _lockImage.gameObject.SetActive(!IsActive);
@@ -29,6 +28,6 @@ public class LevelUIItemView : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Clicked?.Invoke(Level);
+        Clicked?.Invoke(_level);
     }
 }

@@ -5,16 +5,15 @@ public class ServiceUpdater : MonoBehaviour, IUpdateService
 {
     public event Action<float> Updated;
 
+    public event Action Disabled;
+
     private void Update()
     {
         Updated?.Invoke(Time.deltaTime);
     }
-}
 
-public class Updater : MonoBehaviour
-{
-    public void StopAllUpdates()
+    private void OnDisable()
     {
-        StopAllCoroutines();
+        Disabled?.Invoke();
     }
 }

@@ -1,4 +1,4 @@
-using Assets.Scripts.FactoriesClone;
+using Assets.Scripts.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 

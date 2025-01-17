@@ -1,12 +1,11 @@
-﻿using Assets.Scripts.ModelsClone;
-using Assets.Scripts.PresentersClone;
+﻿using Assets.Scripts.Presenters;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
-public class LevelUIContentView : MonoBehaviour, IView
+public class LevelUIContentView : PopUpView, IView
 {
     [SerializeField] private Button _closeButton;
     [SerializeField] private Button _openButton;
@@ -15,7 +14,7 @@ public class LevelUIContentView : MonoBehaviour, IView
     private List<LevelUIItemView> _contentItems;
     private IPresenter _presenter;
 
-    public event Action<Levels> LevelSelected;
+    public event Action<Level> LevelSelected;
 
     public event Action CloseButtonClicked;
 
@@ -32,7 +31,7 @@ public class LevelUIContentView : MonoBehaviour, IView
         _openButton.onClick.AddListener(OnOpenButtonClicked);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         foreach (LevelUIItemView item in _contentItems)
         {
@@ -69,7 +68,7 @@ public class LevelUIContentView : MonoBehaviour, IView
         CloseButtonClicked?.Invoke();
     }
 
-    private void OnLevelSelected(Levels level)
+    private void OnLevelSelected(Level level)
     {
         LevelSelected?.Invoke(level);
     }

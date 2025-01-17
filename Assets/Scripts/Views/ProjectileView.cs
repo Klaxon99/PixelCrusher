@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.ModelsClone;
-using Assets.Scripts.PresentersClone;
+﻿using Assets.Scripts.Models;
+using Assets.Scripts.Presenters;
 using System;
 using UnityEngine;
 
@@ -16,7 +16,7 @@ public class ProjectileView : MonoBehaviour, IView, IDestructible
 
     public event Action<Collision> CollisionEntered;
 
-    public event Action Destructible;
+    public event Action Destructed;
 
     private void Awake()
     {
@@ -47,13 +47,18 @@ public class ProjectileView : MonoBehaviour, IView, IDestructible
         _transform.SetPositionAndRotation(spaceOrientation.Position, spaceOrientation.Rotation);
     }
 
-    public void SetVelocity(Vector3 velocity)
+    public void SetVelocityDirection(Vector3 value)
     {
-        _rigidbody.velocity = velocity;
-    }    
+        _rigidbody.velocity = value;
+    }
+
+    public void SetSpeed(float value)
+    {
+        _rigidbody.velocity = _rigidbody.velocity.normalized * value;
+    }
 
     public void Destruct()
     {
-        Destructible?.Invoke();
+        Destructed?.Invoke();
     }
 }

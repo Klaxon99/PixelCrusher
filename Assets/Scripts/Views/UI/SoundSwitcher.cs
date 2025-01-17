@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class SoundSwitcher : MonoBehaviour
 {
     private const string GlobalVolume = "GlobalVolume";
-    private const float MinVolume = -80f;
+    private const float MinVolume = -50f;
     private const float MaxVolume = 20f;
 
     [SerializeField] private AudioMixer _audioMixer;

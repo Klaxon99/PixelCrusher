@@ -9,9 +9,36 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: c03828325cead8a4f90c11df80721005
   - enabled: 1
+    path: Assets/Scenes/Watermelon.unity
+    guid: 96afae73e340ed7448662e51cb7e140c
+  - enabled: 1
+    path: Assets/Scenes/Orange.unity
+    guid: 6f4b8f2ff053e5141a59f37b689fdd7e
+  - enabled: 1
     path: Assets/Scenes/Avocado.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Spongebob.unity
-    guid: 8ec47aa85be908244b7245013a2309c4
+    path: Assets/Scenes/America.unity
+    guid: ae9e8129580342042abe3ed21c7de8a3
+  - enabled: 1
+    path: Assets/Scenes/SpiderMan.unity
+    guid: 2715cdc1b3d115647b5b7c706ca2e64d
+  - enabled: 1
+    path: Assets/Scenes/Minion.unity
+    guid: d65d65572d3322945b455f3d82e4d4a0
+  - enabled: 1
+    path: Assets/Scenes/AmongUs.unity
+    guid: 8f73a0b64ce735d4f90d597df5e5a186
+  - enabled: 1
+    path: Assets/Scenes/AngryBird.unity
+    guid: 09e7b1f4b98cbd845b849cb1ed4dcfa3
+  - enabled: 1
+    path: Assets/Scenes/Dragon.unity
+    guid: 45626c658c99745409bc5f5aae1851e9
+  - enabled: 1
+    path: Assets/Scenes/Pig.unity
+    guid: a35b681b6c9650c439bfc3ae5c9eadd9
+  - enabled: 1
+    path: Assets/Scenes/SquidGame.unity
+    guid: 6bc16c745b4de354397784d4a3a4a664
   m_configObjects: {}

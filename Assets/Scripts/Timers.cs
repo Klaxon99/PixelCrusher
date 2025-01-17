@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-public class Timers : Update
+public class Timers : ItemUpdatable
 {
     private List<Timer> _items;
 
     public Timers(IUpdateService updateService) : base(updateService)
     {
         _items = new List<Timer>();
-        Enable();
     }
 
     public void AddItem(float time, Action action)

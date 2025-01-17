@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.PresentersClone;
+﻿using Assets.Scripts.Presenters;
 
 internal interface IView
 {

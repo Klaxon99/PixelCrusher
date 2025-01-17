@@ -13,5 +13,14 @@ MonoBehaviour:
   m_Name: LevelUIContent
   m_EditorClassIdentifier: 
   _items:
+  - {fileID: 11400000, guid: 779f86e3a3376e742988dc589787f8e7, type: 2}
+  - {fileID: 11400000, guid: 396d6dc225f09314ebbbb0f6384dcb92, type: 2}
   - {fileID: 11400000, guid: 3e147e409ffe51a4db00c1cd5948744d, type: 2}
-  - {fileID: 11400000, guid: 64b75b454d4876e4796fe48206ea1ed9, type: 2}
+  - {fileID: 11400000, guid: 189daad4319fac1479bee1c98aa188bc, type: 2}
+  - {fileID: 11400000, guid: a83466f92d5e5944e87359c2c9107e5f, type: 2}
+  - {fileID: 11400000, guid: 3e82fb9cc7af31f4987bd46fb9b2044c, type: 2}
+  - {fileID: 11400000, guid: 9b9a37da0f9aedc4fb13415d33b42291, type: 2}
+  - {fileID: 11400000, guid: f003dad8c5a35fa48a7c5fbd1c921040, type: 2}
+  - {fileID: 11400000, guid: c3c32ac206c497343be3977c33c1d0f3, type: 2}
+  - {fileID: 11400000, guid: b9a86981eea81e847803f1cbe5905e8c, type: 2}
+  - {fileID: 11400000, guid: 1d5d73dfe5a47914d8f06d10a9880c57, type: 2}

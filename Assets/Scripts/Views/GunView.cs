@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.ModelsClone;
-using Assets.Scripts.PresentersClone;
+﻿using Assets.Scripts.Models;
+using Assets.Scripts.Presenters;
 using UnityEngine;
 
 public class GunView : MonoBehaviour, IView

@@ -1,53 +1,36 @@
 ﻿using UnityEngine;
-using Assets.Scripts.PresentersClone;
 using UnityEngine.UI;
 using System;
+using Assets.Scripts.Presenters;
 
-public class PauseMenuView : MonoBehaviour, IView
+public class PauseMenuView : PopUpView, IView
 {
-    [SerializeField] private Button _openButton;
     [SerializeField] private Button _closeButton;
     [SerializeField] private Button _mainMenuButton;
-    [SerializeField] private SoundView _soundView; 
+    [SerializeField] private SoundView _soundView;
 
     private IPresenter _presenter;
-
-    public event Action OpenButtonClicked;
 
     public event Action CloseButtonClicked;
     
     public event Action MainMenuButtonClicked;
 
-    public event Action SoundSwitchButtonPressed;
-
-    public SoundView SoundView => _soundView;
-
     public void Init(IPresenter presenter)
     {
         _presenter = presenter;
 
-        _openButton.onClick.AddListener(OnOpenButtonClicked);
         _closeButton.onClick.AddListener(OnCloseButtonClicked);
         _mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
-        _soundView.Clicked += OnSoundButtonPressed;
 
         _presenter.Enable();
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        _openButton.onClick.RemoveListener(OnOpenButtonClicked);
         _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
         _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonClicked);
-        _soundView.Clicked += OnSoundButtonPressed;
 
         _presenter.Disable();
-    }
-
-
-    private void OnSoundButtonPressed()
-    {
-        SoundSwitchButtonPressed?.Invoke();
     }
 
     private void OnMainMenuButtonClicked()
@@ -58,10 +41,5 @@ public class PauseMenuView : MonoBehaviour, IView
     private void OnCloseButtonClicked()
     {
         CloseButtonClicked?.Invoke();
-    }
-
-    private void OnOpenButtonClicked()
-    {
-        OpenButtonClicked?.Invoke();
     }
 }
