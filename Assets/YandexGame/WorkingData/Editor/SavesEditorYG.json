@@ -1,0 +1,30 @@
+{
+  "idSave": 1,
+  "isFirstSession": true,
+  "language": "ru",
+  "promptDone": false,
+  "money": 1,
+  "newPlayerName": "Hello!",
+  "openLevels": [
+    false,
+    true,
+    false
+  ],
+  "GunImprovements": {
+    "Items": [
+      {
+        "Title": "BurstShootSystem"
+      },
+      {
+        "Title": "DynamicMovement"
+      }
+    ]
+  },
+  "PlayerData": {
+    "Nickname": "unauthorized",
+    "LastPassedLevelId": 0
+  },
+  "Wallet": {
+    "Count": 0
+  }
+}

@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SquidGame.unity
     guid: 6bc16c745b4de354397784d4a3a4a664
+  - enabled: 1
+    path: Assets/Scenes/ScreamingCat.unity
+    guid: e38fb3e2252c078438bde4aa8bc8b7ab
   m_configObjects: {}

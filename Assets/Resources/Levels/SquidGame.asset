@@ -15,4 +15,4 @@ MonoBehaviour:
   <Image>k__BackingField: {fileID: 0}
   <SceneName>k__BackingField: SquidGame
   <SceneId>k__BackingField: 11
-  NextLevel: {fileID: 0}
+  NextLevel: {fileID: 11400000, guid: 9c3e2f409efd4254391e8b53be749a5b, type: 2}

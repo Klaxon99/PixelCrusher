@@ -1,55 +1,37 @@
 ﻿using Assets.Scripts.Models;
+using Assets.Scripts.Services;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using YG;
 
 namespace Assets.Scripts.Presenters
 {
     public class GamePresenter : IPresenter
     {
-        private readonly Game _model;
         private readonly GameView _view;
         private readonly IGameMission _gameMission;
-        private readonly IPauseSwitcher _pauseSwitcher;
+        private readonly IProgressSaver _progressSaver;
 
-        public GamePresenter(Game model, GameView view, IPauseSwitcher pauseSwitcher, IGameMission gameMission)
+        public GamePresenter(GameView view, IGameMission gameMission, IProgressSaver progressSaver)
         {
-            _model = model;
             _view = view;
-            _pauseSwitcher = pauseSwitcher;
             _gameMission = gameMission;
+            _progressSaver = progressSaver;
         }
 
         public void Enable()
         {
-            _model.Over += OnGameOver;
-            _gameMission.Succeeded += _model.Stop;
-            _view.PauseButtonPressed += OnPauseButtonClicked;
-            Application.focusChanged += OnGameFocusChanged;
-        }
-
-        private void OnGameFocusChanged(bool state)
-        {
-            if (state == false)
-            {
-                _pauseSwitcher.Pause();
-            }
+            _gameMission.Succeeded += OnGameOver;
         }
 
         public void Disable()
         {
-            _model.Over -= OnGameOver;
-            _gameMission.Succeeded -= _model.Stop;
-            _view.PauseButtonPressed -= OnPauseButtonClicked;
-            Application.focusChanged -= OnGameFocusChanged;
+            _gameMission.Succeeded -= OnGameOver;
         }
 
         private void OnGameOver()
         {
-            Debug.Log("SaveProgress");
-        }
-
-        private void OnPauseButtonClicked()
-        {
-            _pauseSwitcher.Pause();
+            _progressSaver.Save();
         }
     }
 }

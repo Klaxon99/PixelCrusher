@@ -13,13 +13,14 @@ namespace Assets.Scripts.CompositeRoot
 
         [Header("Gun")]
         [SerializeField] private Transform _gunSpawnPoint;
-        [SerializeField] private GunFactory _gunFactory;
+        [SerializeField] private GunBuilder _gunFactory;
 
         [Header("CubesForm")]
         [SerializeField] private CubesForm _cubesForm;
 
         [Header("Score")]
         [SerializeField] private ScoreView _scoreView;
+        [SerializeField] private ScoreZoneView _scoreZoneView;
 
         [Header("LevelBounds")]
         [SerializeField] private Bounds _levelBounds;
@@ -29,23 +30,21 @@ namespace Assets.Scripts.CompositeRoot
         [SerializeField] private SoundView _soundView;
 
         [Header("Game")]
-        [SerializeField] private GameView _gameView;
         [SerializeField] private PauseMenuView _pauseMenuView;
         [SerializeField] private EndGameScreenView _endGameScreenView;
         [SerializeField] private LevelsStorage _levelsStorage;
 
         private Score _score;
-        private Game _game;
         private PauseSwitcher _pauseSwitcher;
 
         private void Awake()
         {
             ComposeCubeGroup();
+            ComposeScore();
             ComposeSound();
 
             _levelBounds.Init();
             ComposeGun();
-            ComposeScore();
             ComposeGame();
         }
 
@@ -53,6 +52,7 @@ namespace Assets.Scripts.CompositeRoot
         {
             _score = new Score(_cubesForm.ItemsCount);
             _scoreView.Init(new ScorePresenter(_score, _scoreView));
+            _scoreZoneView.Init(new ScoreZonePresenter(_score, _scoreZoneView));
         }
 
         private void ComposeCubeGroup()
@@ -66,8 +66,7 @@ namespace Assets.Scripts.CompositeRoot
         {
             _input.Init();
             _gunFactory.Init();
-
-            _gunFactory.AddDynamicMovement().AddSingleShootSystem().Create(new SpaceOrientation(_gunSpawnPoint.position, _gunSpawnPoint.rotation));
+            _gunFactory.Create(new SpaceOrientation(_gunSpawnPoint.position, _gunSpawnPoint.rotation));
         }
 
         private void ComposeSound()
@@ -80,19 +79,16 @@ namespace Assets.Scripts.CompositeRoot
         private void ComposeGame()
         {
             _levelsStorage.Init();
-            _game = new Game();
             _pauseSwitcher = new PauseSwitcher();
             GameMission gameMission = new GameMission(_score);
             SceneLoader sceneLoader = new SceneLoader(_levelsStorage);
-
-            GamePresenter gamePresenter = new GamePresenter(_game, _gameView, _pauseSwitcher, gameMission);
-            _gameView.Init(gamePresenter);
+            DataSaver dataSaver = new DataSaver(_score);
 
             PausePresnter pausePresnter = new PausePresnter(_pauseSwitcher, _pauseMenuView, sceneLoader);
             _pauseMenuView.Hide();
             _pauseMenuView.Init(pausePresnter);
 
-            EndGameScreenPresenter endGameScreenPresenter = new EndGameScreenPresenter(_game, _endGameScreenView, sceneLoader);
+            EndGamePresenter endGameScreenPresenter = new EndGamePresenter(gameMission, dataSaver, _endGameScreenView, sceneLoader);
             _pauseMenuView.Hide();
             _endGameScreenView.Init(endGameScreenPresenter);
         }

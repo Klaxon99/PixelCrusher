@@ -1311,6 +1311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 519799076}
+  _openButton: {fileID: 1550446536}
   _closeButton: {fileID: 403526999}
   _mainMenuButton: {fileID: 65599757}
   _soundView: {fileID: 18646259}
@@ -1556,6 +1557,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 614420277}
+  - component: {fileID: 614420278}
   m_Layer: 5
   m_Name: UpperPanel
   m_TagString: Untagged
@@ -1585,6 +1587,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -102.30005}
   m_SizeDelta: {x: 900, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &614420278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614420276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48cd2ec2846c53248a5de17dd6295e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 789851417}
+  _progressBar: {fileID: 421943058}
 --- !u!1 &620053580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +2263,6 @@ GameObject:
   - component: {fileID: 1094760720}
   - component: {fileID: 1094760722}
   - component: {fileID: 1094760724}
-  - component: {fileID: 1094760725}
   - component: {fileID: 1094760726}
   m_Layer: 0
   m_Name: Root
@@ -2311,11 +2326,11 @@ MonoBehaviour:
   _gunSpawnPoint: {fileID: 1518082415}
   _gunFactory: {fileID: 1094760726}
   _cubesForm: {fileID: 83388112}
-  _scoreView: {fileID: 1330629930}
+  _scoreView: {fileID: 614420278}
+  _scoreZoneView: {fileID: 1330629930}
   _levelBounds: {fileID: 1094760724}
   _soundSettings: {fileID: 11400000, guid: 1ad380fb8bb20594baf6bd007f608815, type: 2}
   _soundView: {fileID: 18646259}
-  _gameView: {fileID: 1094760725}
   _pauseMenuView: {fileID: 519799078}
   _endGameScreenView: {fileID: 1745575145}
   _levelsStorage: {fileID: 11400000, guid: 511bdd7e4ea418940ae63ac78d6a474c, type: 2}
@@ -2337,19 +2352,6 @@ MonoBehaviour:
   _upperWall: {fileID: 1536820731}
   _scoreZone: {fileID: 1330629929}
   _gunSpawnPoint: {fileID: 1518082415}
---- !u!114 &1094760725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094760709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08bd3e2740c20084881fbd44e0d1d95e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pauseButton: {fileID: 1550446536}
 --- !u!114 &1094760726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2363,7 +2365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updateService: {fileID: 1094760712}
-  _gunSettings: {fileID: 11400000, guid: 9489c405697fb3e4880b7f7b38443825, type: 2}
+  _baseGunSettings: {fileID: 11400000, guid: 1d720c854491cf04f9e241901373eba7, type: 2}
   _projectileSettings: {fileID: 11400000, guid: 595fcbb0945b4954f95fcfdda4823a60, type: 2}
   _input: {fileID: 1237294941}
 --- !u!1 &1118689462
@@ -2713,11 +2715,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1330629926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48cd2ec2846c53248a5de17dd6295e1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ae8f57d7a404ce4980223907a6b1305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreCountText: {fileID: 789851417}
-  _progressBar: {fileID: 421943058}
 --- !u!1001 &1382491399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4069,6 +4069,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2054132133}
   m_CullTransparentMesh: 1
+--- !u!1001 &2089369995
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2211564899198745196, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: singleton
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745197, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_Name
+      value: YandexGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211564899198745199, guid: caf9732433f4dc044845763962493607, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: caf9732433f4dc044845763962493607, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4091,3 +4152,4 @@ SceneRoots:
   - {fileID: 1745575144}
   - {fileID: 1580387996}
   - {fileID: 1382491399}
+  - {fileID: 2089369995}

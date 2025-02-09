@@ -4,6 +4,7 @@ using Assets.Scripts.Services;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using YG;
 
 namespace Assets.Scripts.CompositeRoot
 {
@@ -18,11 +19,15 @@ namespace Assets.Scripts.CompositeRoot
         [SerializeField] private SoundSettings _soundSettings;
         [SerializeField] private SoundView _soundView;
 
+        [Header("Wallet")]
+        [SerializeField] private ValueView _valueView;
+
         private PlayerData _playerData;
+        private Wallet _wallet;
 
         private void Start()
         {
-            ComposePlayerData();
+            ComposeSavesData();
             ComposeLevels();
             ComposeSound();
         }
@@ -34,9 +39,24 @@ namespace Assets.Scripts.CompositeRoot
             _soundView.Init(soundPresenter);
         }
 
-        private void ComposePlayerData()
+        private void ComposeSavesData()
         {
-            _playerData = new PlayerData(1);
+            if (YandexGame.savesData.idSave == 0)
+            {
+                YandexGame.savesData.PlayerData = _playerData = new PlayerData(YandexGame.playerName, 0);
+                YandexGame.savesData.Wallet = _wallet = new Wallet(0);
+                YandexGame.savesData.GunImprovements = new List<string>();
+            }
+            else
+            {
+                _playerData = YandexGame.savesData.PlayerData;
+                _wallet = YandexGame.savesData.Wallet;
+            }
+
+            YandexGame.SaveProgress();
+
+            _valueView.SetTextValue(_wallet.Count.ToString());
+            _valueView.Init(new WalletPresenter(_wallet, _valueView));
         }
 
         private void ComposeLevels()

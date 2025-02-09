@@ -1920,6 +1920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 519799076}
+  _openButton: {fileID: 1550446536}
   _closeButton: {fileID: 403526999}
   _mainMenuButton: {fileID: 65599757}
   _soundView: {fileID: 18646259}
@@ -2931,7 +2932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updateService: {fileID: 1094760712}
-  _gunSettings: {fileID: 11400000, guid: 9489c405697fb3e4880b7f7b38443825, type: 2}
+  _baseGunSettings: {fileID: 11400000, guid: 1d720c854491cf04f9e241901373eba7, type: 2}
   _projectileSettings: {fileID: 11400000, guid: 595fcbb0945b4954f95fcfdda4823a60, type: 2}
   _input: {fileID: 1237294941}
 --- !u!1 &1118689462
