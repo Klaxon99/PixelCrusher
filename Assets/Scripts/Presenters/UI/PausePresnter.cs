@@ -1,59 +1,53 @@
 ﻿using Assets.Scripts.Models;
 using Assets.Scripts.Services;
+using Assets.Scripts.Views;
 using UnityEngine;
 
 namespace Assets.Scripts.Presenters
 {
-    public class PausePresnter : IPresenter
+    public class PausePresnter : PopupPresenter<PauseMenuView>
     {
         private readonly PauseSwitcher _model;
-        private readonly PauseMenuView _view;
         private readonly SceneLoader _sceneLoader;
 
-        public PausePresnter(PauseSwitcher model, PauseMenuView view, SceneLoader sceneLoader)
+        public PausePresnter(PauseSwitcher model, PauseMenuView view, SceneLoader sceneLoader) : base(view)
         {
             _model = model;
-            _view = view;
             _sceneLoader = sceneLoader;
         }
 
-        public void Enable()
+        public override void Enable()
         {
+            base.Enable();
+
             _model.Paused += OnPaused;
             _model.Unpaused += OnUnpaused;
-            _view.CloseButtonClicked += OnCloseButtonClicked;
-            _view.MainMenuButtonClicked += OnMainMenuButtonClicked;
-            _view.OpenButtonClicked += OnOpenButtonClicked;
+            View.MainMenuButtonClicked += OnMainMenuButtonClicked;
             Application.focusChanged += OnGameFocusChanged;
 
             OnUnpaused();
         }
 
-        public void Disable()
+        public override void Disable()
         {
+            base.Disable();
+
             _model.Paused -= OnPaused;
             _model.Unpaused -= OnUnpaused;
-            _view.CloseButtonClicked -= OnCloseButtonClicked;
-            _view.MainMenuButtonClicked -= OnMainMenuButtonClicked;
-            _view.OpenButtonClicked -= OnOpenButtonClicked;
+            View.MainMenuButtonClicked -= OnMainMenuButtonClicked;
             Application.focusChanged -= OnGameFocusChanged;
         }
 
+        protected override void OnOpenButtonClicked() => _model.Pause();
+
+        protected override void OnCloseButtonClicked() => _model.Unpause();
+
         private void OnGameFocusChanged(bool isActive)
         {
-            if (isActive)
+            if (isActive == false)
             {
                 _model.Pause();
             }
-            else
-            {
-                _model.Unpause();
-            }
-        }
-
-        private void OnOpenButtonClicked()
-        {
-            _model.Pause();
         }
 
         private void OnMainMenuButtonClicked()
@@ -61,21 +55,16 @@ namespace Assets.Scripts.Presenters
             _sceneLoader.LoadMainMenu();
         }
 
-        private void OnCloseButtonClicked()
-        {
-            _model.Unpause();
-        }
-
         private void OnUnpaused()
         {
             Time.timeScale = 1;
-            _view.Hide();
+            View.Hide();
         }
 
         private void OnPaused()
         {
             Time.timeScale = 0;
-            _view.Show();
+            View.Show();
         }
     }
 }

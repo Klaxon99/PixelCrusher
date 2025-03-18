@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9488c24acd3ef594a9f8ad779f9fdcf1, type: 3}
+  m_Name: Pacman
+  m_EditorClassIdentifier: 
+  <Image>k__BackingField: {fileID: 21300000, guid: b3374ffca4c146f42a4b0ac08a0ac8d3, type: 3}
+  <SceneName>k__BackingField: Pacman
+  <SceneId>k__BackingField: 20
+  <NextLevel>k__BackingField: {fileID: 11400000, guid: 9b9a37da0f9aedc4fb13415d33b42291, type: 2}

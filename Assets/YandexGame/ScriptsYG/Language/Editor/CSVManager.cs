@@ -13,7 +13,7 @@ namespace YG.Insides
         public static readonly string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
 
         // Чтение CSV файла. Поиск переводов по ключу
-        public static string[] ImportTransfersByKey(LanguageYG langYG)
+        public static string[] ImportTransfersByKey(Language langYG)
         {
             TextAsset data = Resources.Load(langYG.infoYG.CSVFileTranslate.name) as TextAsset;
 
@@ -122,7 +122,7 @@ namespace YG.Insides
 
 
         // Запись одного текста
-        public static void SetIDLineFile(InfoYG infoYG, LanguageYG langYG)
+        public static void SetIDLineFile(InfoYG infoYG, Language langYG)
         {
             if (!File.Exists(Patch(infoYG))) // Eсли файла нет
             {
@@ -223,7 +223,7 @@ namespace YG.Insides
                 stream.Write(data, Patch(infoYG));
         }
 
-        public static string GetKeyForLangYG(LanguageYG langYG)
+        public static string GetKeyForLangYG(Language langYG)
         {
             string key = null;
 

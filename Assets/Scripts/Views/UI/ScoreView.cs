@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreView : ValueView
+namespace Assets.Scripts.Views
 {
-    [SerializeField] private Image _progressBar;
-
-    public void SetProgressBar(float progressPercent)
+    public class ScoreView : ValueView
     {
-        _progressBar.fillAmount = progressPercent;
+        [SerializeField] private Image _progressBar;
+
+        public void SetProgressBar(float progressPercent)
+        {
+            _progressBar.fillAmount = progressPercent;
+        }
     }
 }

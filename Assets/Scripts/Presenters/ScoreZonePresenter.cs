@@ -1,14 +1,15 @@
 ﻿using Assets.Scripts.Models;
+using Assets.Scripts.Views;
 using UnityEngine;
 
 namespace Assets.Scripts.Presenters
 {
     public class ScoreZonePresenter : IPresenter
     {
-        private readonly Score _score;
+        private readonly IScoreIterator _score;
         private readonly ScoreZoneView _view;
 
-        public ScoreZonePresenter(Score score, ScoreZoneView view)
+        public ScoreZonePresenter(IScoreIterator score, ScoreZoneView view)
         {
             _score = score;
             _view = view;
@@ -28,9 +29,14 @@ namespace Assets.Scripts.Presenters
         {
             if (collider.TryGetComponent(out IDestructible destructible))
             {
-                if (destructible is CubeGroupItemView)
+                if (destructible is CubeGroupItem)
                 {
                     _score.Add();
+
+                    if (_view.CoinSound.isPlaying == false)
+                    {
+                        _view.CoinSound.Play();
+                    }
                 }
 
                 destructible.Destruct();

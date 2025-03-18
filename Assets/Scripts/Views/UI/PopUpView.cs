@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
-public abstract class PopUpView : MonoBehaviour
+namespace Assets.Scripts.Views
 {
-    [SerializeField] private Canvas _canvas;
+    public abstract class PopUpView : View
+    {
+        [SerializeField] private Canvas _canvas;
 
-    public void Show() => _canvas.enabled = true;
+        public void Show() => _canvas.enabled = true;
 
-    public void Hide() => _canvas.enabled = false;
+        public void Hide() => _canvas.enabled = false;
+    }
 }

@@ -1,31 +1,40 @@
 ﻿using Assets.Scripts.Factories;
+using Assets.Scripts.Models;
+using Assets.Scripts.Views;
 using UnityEngine;
 
 namespace Assets.Scripts.Presenters
 {
     public class ProjectilePresenter : IPresenter
     {
+        private readonly Projectile _model;
         private readonly ProjectileView _view;
         private readonly ProjectileFactory _projectileFactory;
-        private readonly ProjectileSettings _projectileSettings;
 
-        public ProjectilePresenter(ProjectileView view, ProjectileFactory projectileFactory, ProjectileSettings projectileSettings)
+        public ProjectilePresenter(Projectile model, ProjectileView view, ProjectileFactory projectileFactory)
         {
+            _model = model;
             _view = view;
             _projectileFactory = projectileFactory;
-            _projectileSettings = projectileSettings;
         }
 
         public void Enable()
         {
+            _model.VelocityChanged += OnVelocityChanged;
             _view.CollisionEntered += OnCollisionEnter;
             _view.Destructed += OnDestructible;
         }
 
         public void Disable()
         {
+            _model.VelocityChanged -= OnVelocityChanged;
             _view.CollisionEntered -= OnCollisionEnter;
             _view.Destructed -= OnDestructible;
+        }
+
+        private void OnVelocityChanged()
+        {
+            _view.SetVelocity(_model.Velocity);
         }
 
         private void OnDestructible()
@@ -44,18 +53,18 @@ namespace Assets.Scripts.Presenters
 
             if (collision.collider.TryGetComponent(out IInteractable cube))
             {
-                Collider[] colliders = Physics.OverlapSphere(contactPoint.point, _projectileSettings.InteractionRadius);
+                Collider[] colliders = Physics.OverlapSphere(contactPoint.point, _model.InteractionRadius);
 
                 foreach (Collider collider in colliders)
                 {
                     if (collider.TryGetComponent(out IInteractable interactable))
                     {
-                        interactable.Touch(-Vector3.forward * _projectileSettings.InteractionForce);
+                        interactable.Touch(-Vector3.forward * _model.InteractionForce);
                     }
                 }
             }
 
-            _view.SetSpeed(_projectileSettings.Speed);
+            _model.Reflect(contactPoint.normal);
         }
     }
 }

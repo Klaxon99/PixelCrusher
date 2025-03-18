@@ -23,7 +23,7 @@ namespace YG.Insides
             foreach (GameObject obj in Selection.gameObjects)
             {
                 countSelectObj++;
-                LanguageYG langYG = obj.GetComponent<LanguageYG>();
+                Language langYG = obj.GetComponent<Language>();
 
                 if (langYG)
                 {
@@ -61,7 +61,7 @@ namespace YG.Insides
             GUILayout.EndScrollView();
         }
 
-        void DrawLine(string line, LanguageYG langYG)
+        void DrawLine(string line, Language langYG)
         {
             GUILayout.BeginHorizontal();
 

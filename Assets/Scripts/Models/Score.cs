@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Models
 {
-    public class Score
+    public class Score : IReadOnlyScore, IScoreIterator
     {
         private int _minCount;
 

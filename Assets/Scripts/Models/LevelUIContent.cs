@@ -1,21 +1,36 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Assets.Scripts.Models
 {
-    public class LevelUIContent : PopUpModel
+    public class LevelUIContent
     {
-        private readonly PlayerData _playerData;
-        private readonly LevelsStorage _levelsStorage;
+        private int _lastPassedLevel;
+        private Dictionary<int, Level> _availableLevels;
+        private List<Level> _privateLevels;
 
-        public LevelUIContent(LevelsStorage levelsStorage, PlayerData playerData)
+        public LevelUIContent(IEnumerable<Level> levels, int lastPassedLevel)
         {
-            _playerData = playerData;
-            _levelsStorage = levelsStorage;
+            _lastPassedLevel = lastPassedLevel;
+            _availableLevels = new Dictionary<int, Level>();
+            _privateLevels = new List<Level>();
+
+            foreach (Level level in levels)
+            {
+                int nextLevelId = _lastPassedLevel + 1;
+
+                if (level.SceneId <= nextLevelId)
+                {
+                    _availableLevels[level.SceneId] = level;
+                }
+                else
+                {
+                    _privateLevels.Add(level);
+                }
+            }
         }
 
-        public IEnumerable<Level> GetAvailableLevels => _levelsStorage.Items.Where(item => item.SceneId <= _playerData.LastPassedLevelId + 1);
+        public IReadOnlyDictionary<int, Level> AvailableLevels => _availableLevels;
 
-        public IEnumerable<Level> GetPrivateLevels => _levelsStorage.Items.Where(item => item.SceneId > _playerData.LastPassedLevelId + 1);
+        public IEnumerable<Level> PrivateLevels => _privateLevels; 
     }
 }

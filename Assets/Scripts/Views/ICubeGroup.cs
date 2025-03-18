@@ -1,4 +1,7 @@
-﻿public interface ICubeGroup
+﻿namespace Assets.Scripts.Views
 {
-    public void Detach(CubeGroupItemView cubeGroupItemView);
+    public interface ICubeGroup
+    {
+        public void Detach(CubeGroupItem cubeGroupItemView);
+    }
 }

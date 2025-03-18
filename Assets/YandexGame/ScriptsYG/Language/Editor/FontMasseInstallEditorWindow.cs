@@ -26,7 +26,7 @@ namespace YG.Insides
             {
                 objectsTranlate.Clear();
 
-                foreach (LanguageYG obj in SceneAsset.FindObjectsByType<LanguageYG>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                foreach (Language obj in SceneAsset.FindObjectsByType<Language>(FindObjectsInactive.Include, FindObjectsSortMode.None))
                 {
                     objectsTranlate.Add(obj.gameObject);
                 }
@@ -38,7 +38,7 @@ namespace YG.Insides
             {
                 foreach (GameObject obj in Selection.gameObjects)
                 {
-                    if (obj.GetComponent<LanguageYG>())
+                    if (obj.GetComponent<Language>())
                     {
                         bool check = false;
                         for (int i = 0; i < objectsTranlate.Count; i++)
@@ -79,7 +79,7 @@ namespace YG.Insides
 
                     foreach (GameObject obj in objectsTranlate)
                     {
-                        LanguageYG scr = obj.GetComponent<LanguageYG>();
+                        Language scr = obj.GetComponent<Language>();
 
                         if (scr.infoYG.fonts.defaultFont.Length >= scr.fontNumber + 1 && scr.infoYG.fonts.defaultFont[scr.fontNumber])
                         {

@@ -1,33 +1,35 @@
-﻿using Assets.Scripts.Models;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GunDynamicMovement : GunBaseMovement
+namespace Assets.Scripts.Models
 {
-    private readonly float _speed;
-    private readonly float _boundCoordinate;
-
-    public GunDynamicMovement(float speed, float boundCoordinate)
+    public class GunDynamicMovement : GunBaseMovement
     {
-        _speed = speed;
-        _boundCoordinate = boundCoordinate;
-    }
+        private readonly float _speed;
+        private readonly float _boundCoordinate;
 
-    public override SpaceOrientation Transform(SpaceOrientation spaceOrientation, ITransformActions transformActions, float deltaTime)
-    {
-        SpaceOrientation baseSpaceOrientation = base.Transform(spaceOrientation, transformActions, deltaTime);
+        public GunDynamicMovement(float speed)
+        {
+            _speed = speed;
+            _boundCoordinate = 7f;
+        }
 
-        float offset = transformActions.MovementAction * deltaTime;
+        public override SpaceOrientation Transform(SpaceOrientation spaceOrientation, ITransformActions transformActions, float deltaTime)
+        {
+            SpaceOrientation baseSpaceOrientation = base.Transform(spaceOrientation, transformActions, deltaTime);
 
-        SpaceOrientation newOrientation = new SpaceOrientation(MoveHorizontal(spaceOrientation.Position, offset), baseSpaceOrientation.Rotation);
+            float offset = transformActions.MovementAction * deltaTime;
 
-        return newOrientation;
-    }
+            SpaceOrientation newOrientation = new SpaceOrientation(MoveHorizontal(spaceOrientation.Position, offset), baseSpaceOrientation.Rotation);
 
-    private Vector3 MoveHorizontal(Vector3 currentPosition, float offset)
-    {
-        Vector3 newPosition = currentPosition + Vector3.right * offset * _speed;
-        newPosition.x = Mathf.Clamp(newPosition.x, -_boundCoordinate, _boundCoordinate);
+            return newOrientation;
+        }
 
-        return newPosition;
+        private Vector3 MoveHorizontal(Vector3 currentPosition, float offset)
+        {
+            Vector3 newPosition = currentPosition + Vector3.right * offset * _speed;
+            newPosition.x = Mathf.Clamp(newPosition.x, -_boundCoordinate, _boundCoordinate);
+
+            return newPosition;
+        }
     }
 }

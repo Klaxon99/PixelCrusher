@@ -9,10 +9,10 @@ using TMPro;
 
 namespace YG.Insides
 {
-    [CustomEditor(typeof(LanguageYG))]
+    [CustomEditor(typeof(Language))]
     public class LanguageYGEditor : Editor
     {
-        LanguageYG scr;
+        Language scr;
 
         GUIStyle red;
         GUIStyle green;
@@ -21,7 +21,7 @@ namespace YG.Insides
 
         private void OnEnable()
         {
-            scr = (LanguageYG)target;
+            scr = (Language)target;
             scr.Serialize();
         }
 
@@ -29,7 +29,7 @@ namespace YG.Insides
         {
             serializedObject.Update();
 
-            scr = (LanguageYG)target;
+            scr = (Language)target;
             Undo.RecordObject(scr, "Undo LanguageYG");
 
             red = new GUIStyle(EditorStyles.label);

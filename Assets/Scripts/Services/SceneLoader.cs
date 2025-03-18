@@ -23,7 +23,16 @@ namespace Assets.Scripts.Services
         {
             int currentLevelId = SceneManager.GetActiveScene().buildIndex;
 
-            LoadLevel(_levelsStorage.GetLevelById(currentLevelId).NextLevel);
+            Level nextLevel = _levelsStorage.GetLevelById(currentLevelId).NextLevel;
+
+            if (nextLevel == null)
+            {
+                LoadMainMenu();
+            }
+            else
+            {
+                LoadLevel(nextLevel);
+            }
         }
 
         public void LoadLevel(Level level)

@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Presenters
+﻿using Assets.Scripts.Views;
+
+namespace Assets.Scripts.Presenters
 {
     public class SoundPresenter : IPresenter
     {
@@ -13,6 +15,10 @@
 
         public void Enable()
         {
+            _model.Muted += OnMuted;
+            _model.Unmuted += OnUnmuted;
+            _view.Clicked += OnClicked;
+
             if (_model.IsMute)
             {
                 _view.Mute();
@@ -21,10 +27,6 @@
             {
                 _view.Unmute();
             }
-
-            _model.Muted += OnMuted;
-            _model.Unmuted += OnUnmuted;
-            _view.Clicked += OnClicked;
         }
 
         public void Disable()

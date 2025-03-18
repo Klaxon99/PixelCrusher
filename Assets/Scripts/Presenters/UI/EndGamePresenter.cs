@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Models;
 using Assets.Scripts.Services;
+using Assets.Scripts.Views;
 
 namespace Assets.Scripts.Presenters
 {
@@ -24,6 +25,8 @@ namespace Assets.Scripts.Presenters
             _view.NextLevelButtonClicked += OnNextLevelButtonClicked;
             _view.ReloadLevelButtonClicked += OnReloadLevelButtonClicked;
             _view.MainMenuButtonClicked += OnMainMenuButtonClicked;
+
+            _view.Hide();
         }
 
         public void Disable()
@@ -36,22 +39,24 @@ namespace Assets.Scripts.Presenters
 
         private void OnGameOver()
         {
-            _progressSaver.Save();
             _view.Show();
         }
 
         private void OnMainMenuButtonClicked()
         {
+            _progressSaver.Save();
             _sceneLoader.LoadMainMenu();
         }
 
         private void OnReloadLevelButtonClicked()
         {
+            _progressSaver.Save();
             _sceneLoader.ReloadCurrentLevel();
         }
 
         private void OnNextLevelButtonClicked()
         {
+            _progressSaver.Save();
             _sceneLoader.LoadNextLevel();
         }
     }

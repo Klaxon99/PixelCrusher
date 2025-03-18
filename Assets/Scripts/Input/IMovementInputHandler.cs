@@ -1,4 +1,4 @@
 ﻿public interface IMovementInputHandler
 {
-    public void SetMovementAction(float horizontalDirection);
+    public void SetMovementAction(float value);
 }

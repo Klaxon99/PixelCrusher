@@ -1,24 +1,28 @@
-﻿using Assets.Scripts.Models;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GunBaseMovement : IGunMovement
+namespace Assets.Scripts.Models
 {
-    public virtual SpaceOrientation Transform(SpaceOrientation spaceOrientation, ITransformActions transformActions, float deltaTime)
+    public class GunBaseMovement : IGunMovement
     {
-        return new SpaceOrientation(spaceOrientation.Position, CalculateRotation(spaceOrientation.Rotation, transformActions.AimAction));
-    }
-
-    private Quaternion CalculateRotation(Quaternion rotation, float offset)
-    {
-        Quaternion newRotation = rotation * Quaternion.Euler(0, offset, 0);
-
-        float dot = Vector3.Dot(newRotation * Vector3.forward, Vector3.up);
-
-        if (dot > 0f)
+        public virtual SpaceOrientation Transform(SpaceOrientation spaceOrientation, ITransformActions transformActions, float deltaTime)
         {
-            return newRotation;
+            return new SpaceOrientation(spaceOrientation.Position, CalculateRotation(spaceOrientation.Rotation, transformActions.AimAction));
         }
 
-        return rotation;
+        private Quaternion CalculateRotation(Quaternion currentRotation, float offset)
+        {
+            float staticAxis = 0f;
+            Quaternion newRotation = currentRotation * Quaternion.Euler(staticAxis, offset, staticAxis);
+
+            float dot = Vector3.Dot(newRotation * Vector3.forward, Vector3.up);
+            float minCorrectDot = 0f;
+
+            if (dot > minCorrectDot)
+            {
+                return newRotation;
+            }
+
+            return currentRotation;
+        }
     }
 }

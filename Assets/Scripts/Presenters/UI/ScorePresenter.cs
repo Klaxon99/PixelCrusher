@@ -1,13 +1,14 @@
 ﻿using Assets.Scripts.Models;
+using Assets.Scripts.Views;
 
 namespace Assets.Scripts.Presenters
 {
     public class ScorePresenter : IPresenter
     {
-        private readonly Score _score;
+        private readonly IReadOnlyScore _score;
         private readonly ScoreView _scoreView;
 
-        public ScorePresenter(Score score, ScoreView scoreView)
+        public ScorePresenter(IReadOnlyScore score, ScoreView scoreView)
         {
             _score = score;
             _scoreView = scoreView;

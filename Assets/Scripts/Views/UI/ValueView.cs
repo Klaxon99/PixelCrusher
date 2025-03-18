@@ -1,12 +1,15 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class ValueView : View
+namespace Assets.Scripts.Views
 {
-    [SerializeField] private TMP_Text _text;
-
-    public void SetTextValue(string value)
+    public class ValueView : View
     {
-        _text.text = value;
+        [SerializeField] private TMP_Text _text;
+
+        public void SetTextValue(string value)
+        {
+            _text.text = value;
+        }
     }
 }

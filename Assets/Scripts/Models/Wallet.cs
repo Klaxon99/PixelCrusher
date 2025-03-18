@@ -3,16 +3,16 @@
 namespace Assets.Scripts.Models
 {
     [Serializable]
-    public class Wallet : IResourceCounter
+    public class Wallet : IReadOnlyWallet
     {
-        public Wallet(int count)
+        public Wallet(int money = 0)
         {
-            Count = count;
+            Money = money;
         }
 
-        public event Action<int> CountChanged;
+        public event Action<int> MoneyCountChanged;
 
-        public int Count { get; private set; }
+        public int Money { get; private set; }
 
         public void Add(int amount)
         {
@@ -21,9 +21,9 @@ namespace Assets.Scripts.Models
                 throw new ArgumentOutOfRangeException();
             }
 
-            Count += amount;
+            Money += amount;
 
-            CountChanged?.Invoke(Count);
+            MoneyCountChanged?.Invoke(Money);
         }
 
         public void Reduce(int amount)
@@ -33,14 +33,14 @@ namespace Assets.Scripts.Models
                 throw new ArgumentOutOfRangeException();
             }
 
-            if (amount > Count)
+            if (amount > Money)
             {
                 throw new InvalidOperationException();
             }
 
-            Count -= amount;
+            Money -= amount;
 
-            CountChanged?.Invoke(Count);
+            MoneyCountChanged?.Invoke(Money);
         }
     }
 }

@@ -4,30 +4,32 @@ namespace Assets.Scripts.Models
 {
     public class BurstShootingSystem : IShootControlSystem
     {
-        private readonly Timers _timers;
-        private readonly float _reloadTime;
-        private readonly float _queueTime;
-
+        private float _queueTime;
+        private int _queueLength;
         private bool _canShoot;
 
-        public BurstShootingSystem(Timers timers, float  reloadTime)
+        public BurstShootingSystem(float reloadTime, int queueLength)
         {
             _canShoot = true;
-            _timers = timers;
-            _reloadTime = reloadTime;
+            ReloadTime = reloadTime;
             _queueTime = 0.2f;
+            _queueLength = queueLength;
         }
 
-        public void TryShoot(Action shootAction)
+        public float ReloadTime { get; }
+
+        public void TryShoot(Action shootAction, ITimer timers)
         {
             if (_canShoot)
             {
                 _canShoot = false;
 
-                shootAction?.Invoke();
-                _timers.AddItem(_queueTime, shootAction);
-                _timers.AddItem(_queueTime * 2f, shootAction);
-                _timers.AddItem(_reloadTime, () => _canShoot = true);
+                for (int i = 0; i < _queueLength; i++)
+                {
+                    timers.Create(i * _queueTime, shootAction);
+                }
+
+                timers.Create(ReloadTime, () => _canShoot = true);
             }
         }
     }

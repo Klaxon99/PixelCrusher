@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Models;
+using Assets.Scripts.Views;
 
 namespace Assets.Scripts.Factories
 {

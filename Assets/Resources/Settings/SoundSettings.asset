@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6c8f56c1ce0d454088c7437663d0443, type: 3}
+  m_Script: {fileID: 11500000, guid: 537b1741206ded34f9fd38a993af05be, type: 3}
   m_Name: SoundSettings
   m_EditorClassIdentifier: 
-  IsMute: 1
+  <IsMute>k__BackingField: 0

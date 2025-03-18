@@ -20,9 +20,9 @@ namespace Assets.Scripts.Models
 
         public SpaceOrientation SpaceOrientation {  get; private set; }
 
-        public void Shoot()
+        public void Shoot(ITimer timers)
         {
-            _shooter.TryShoot(() => Shot?.Invoke());
+            _shooter.TryShoot(() => Shot?.Invoke(), timers);
         }
 
         public void Transform(ITransformActions transformActions, float deltaTime)

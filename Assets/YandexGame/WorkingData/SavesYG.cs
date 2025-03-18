@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Models;
-using System.Collections.Generic;
 
 namespace YG
 {
@@ -20,14 +19,11 @@ namespace YG
 
         // Ваши сохранения
         // ...
-        public List<string> GunImprovements;
+        public int GunLevel;
 
-        public PlayerData PlayerData;
+        public int LastPassedLevelId;
 
         public Wallet Wallet;
-
-        // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
-
 
         // Вы можете выполнить какие то действия при загрузке сохранений
         public SavesYG()

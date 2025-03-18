@@ -3,52 +3,55 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndGameScreenView : PopUpView, IView
+namespace Assets.Scripts.Views
 {
-    [SerializeField] private Button _nextLevelButton;
-    [SerializeField] private Button _reloadLevelButton;
-    [SerializeField] private Button _mainMenuButton;
-
-    private IPresenter _presenter;
-
-    public event Action NextLevelButtonClicked;
-
-    public event Action ReloadLevelButtonClicked;
-
-    public event Action MainMenuButtonClicked;
-
-    public void Init(IPresenter presenter)
+    public class EndGameScreenView : PopUpView
     {
-        _presenter = presenter;
+        [SerializeField] private Button _nextLevelButton;
+        [SerializeField] private Button _reloadLevelButton;
+        [SerializeField] private Button _mainMenuButton;
 
-        _nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
-        _reloadLevelButton.onClick.AddListener(OnReloadLevelButtonClicked);
-        _mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        private IPresenter _presenter;
 
-        _presenter.Enable();
-    }
+        public event Action NextLevelButtonClicked;
 
-    private void OnDisable()
-    {
-        _nextLevelButton.onClick.RemoveListener(OnNextLevelButtonClicked);
-        _reloadLevelButton.onClick.RemoveListener(OnReloadLevelButtonClicked);
-        _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonClicked);
+        public event Action ReloadLevelButtonClicked;
 
-        _presenter.Disable();
-    }
+        public event Action MainMenuButtonClicked;
 
-    private void OnNextLevelButtonClicked()
-    {
-        NextLevelButtonClicked?.Invoke();
-    }
+        public override void Init(IPresenter presenter)
+        {
+            _presenter = presenter;
 
-    private void OnReloadLevelButtonClicked()
-    {
-        ReloadLevelButtonClicked?.Invoke();
-    }
+            _nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
+            _reloadLevelButton.onClick.AddListener(OnReloadLevelButtonClicked);
+            _mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
 
-    private void OnMainMenuButtonClicked()
-    {
-        MainMenuButtonClicked?.Invoke();
+            _presenter.Enable();
+        }
+
+        protected override void OnDisable()
+        {
+            _nextLevelButton.onClick.RemoveListener(OnNextLevelButtonClicked);
+            _reloadLevelButton.onClick.RemoveListener(OnReloadLevelButtonClicked);
+            _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonClicked);
+
+            _presenter.Disable();
+        }
+
+        private void OnNextLevelButtonClicked()
+        {
+            NextLevelButtonClicked?.Invoke();
+        }
+
+        private void OnReloadLevelButtonClicked()
+        {
+            ReloadLevelButtonClicked?.Invoke();
+        }
+
+        private void OnMainMenuButtonClicked()
+        {
+            MainMenuButtonClicked?.Invoke();
+        }
     }
 }

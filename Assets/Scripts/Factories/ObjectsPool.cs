@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,8 +15,6 @@ namespace Assets.Scripts.Factories
             _items = new Queue<T>();
         }
 
-        public int ItemsCount => _items.Count;
-
         public void AddItem(T item)
         {
             if (item == null)
@@ -31,18 +28,16 @@ namespace Assets.Scripts.Factories
 
         public T GetItem()
         {
-            T item;
+            int minCount = 0;
 
-            if (_items.Count > 0)
+            if (_items.Count > minCount)
             {
-                item = _items.Dequeue();
+                return _items.Dequeue();
             }
             else
             {
-                item = GameObject.Instantiate(_prefab);
+                return GameObject.Instantiate(_prefab);
             }
-
-            return item;
         }
     }
 }

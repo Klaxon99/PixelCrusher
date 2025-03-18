@@ -1,26 +1,29 @@
 ﻿using Assets.Scripts.Models;
+using Assets.Scripts.Views;
 
 namespace Assets.Scripts.Presenters
 {
     public class WalletPresenter : IPresenter
     {
-        private readonly IResourceCounter _counter;
+        private readonly Wallet _wallet;
         private readonly ValueView _view;
 
-        public WalletPresenter(IResourceCounter counter, ValueView view)
+        public WalletPresenter(Wallet wallet, ValueView view)
         {
-            _counter = counter;
+            _wallet = wallet;
             _view = view;
         }
 
         public void Enable()
         {
-            _counter.CountChanged += OnCountChanged;
+            _wallet.MoneyCountChanged += OnCountChanged;
+
+            OnCountChanged(_wallet.Money);
         }
 
         public void Disable()
         {
-            _counter.CountChanged -= OnCountChanged;
+            _wallet.MoneyCountChanged -= OnCountChanged;
         }
 
         private void OnCountChanged(int value)

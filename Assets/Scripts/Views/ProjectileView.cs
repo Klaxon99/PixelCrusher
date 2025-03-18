@@ -1,64 +1,48 @@
 ﻿using Assets.Scripts.Models;
-using Assets.Scripts.Presenters;
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Transform))]
-[RequireComponent(typeof(AudioSource))]
-public class ProjectileView : MonoBehaviour, IView, IDestructible
+namespace Assets.Scripts.Views
 {
-    private Rigidbody _rigidbody;
-    private Transform _transform;
-    private IPresenter _presenter;
-
-    public AudioSource AudioSource { get; private set; }
-
-    public event Action<Collision> CollisionEntered;
-
-    public event Action Destructed;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Transform))]
+    [RequireComponent(typeof(AudioSource))]
+    public class ProjectileView : View, IDestructible
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _transform = _rigidbody.transform;
-        AudioSource = GetComponent<AudioSource>();
-    }
+        private Rigidbody _rigidbody;
+        private Transform _transform;
 
-    public void Init(IPresenter presenter)
-    {
-        _presenter = presenter;
+        public event Action<Collision> CollisionEntered;
 
-        _presenter.Enable();
-    }
+        public event Action Destructed;
 
-    private void OnDisable()
-    {
-        _presenter.Disable();
-    }
+        public AudioSource AudioSource { get; private set; }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        CollisionEntered?.Invoke(collision);
-    }
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+            _transform = _rigidbody.transform;
+            AudioSource = GetComponent<AudioSource>();
+        }
 
-    public void SetOrientation(SpaceOrientation spaceOrientation)
-    {
-        _transform.SetPositionAndRotation(spaceOrientation.Position, spaceOrientation.Rotation);
-    }
+        private void OnCollisionEnter(Collision collision)
+        {
+            CollisionEntered?.Invoke(collision);
+        }
 
-    public void SetVelocityDirection(Vector3 value)
-    {
-        _rigidbody.velocity = value;
-    }
+        public void SetVelocity(Vector3 value)
+        {
+            _rigidbody.velocity = value;
+        }
 
-    public void SetSpeed(float value)
-    {
-        _rigidbody.velocity = _rigidbody.velocity.normalized * value;
-    }
+        public void SetOrientation(SpaceOrientation spaceOrientation)
+        {
+            _transform.SetPositionAndRotation(spaceOrientation.Position, spaceOrientation.Rotation);
+        }
 
-    public void Destruct()
-    {
-        Destructed?.Invoke();
+        public void Destruct()
+        {
+            Destructed?.Invoke();
+        }
     }
 }

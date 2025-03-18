@@ -1,19 +1,22 @@
 ﻿using Assets.Scripts.Presenters;
 using UnityEngine;
 
-public abstract class View : MonoBehaviour
+namespace Assets.Scripts.Views
 {
-    private IPresenter _presenter;
-
-    public virtual void Init(IPresenter presenter)
+    public abstract class View : MonoBehaviour
     {
-        _presenter= presenter;
+        private IPresenter _presenter;
 
-        _presenter.Enable();
-    }
+        public virtual void Init(IPresenter presenter)
+        {
+            _presenter= presenter;
 
-    protected virtual void OnDisable()
-    {
-        _presenter.Disable();
+            _presenter.Enable();
+        }
+
+        protected virtual void OnDisable()
+        {
+            _presenter.Disable();
+        }
     }
 }

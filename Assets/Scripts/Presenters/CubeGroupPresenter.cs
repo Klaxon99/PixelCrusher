@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Factories;
 using Assets.Scripts.Models;
+using Assets.Scripts.Views;
+using UnityEngine;
 
 namespace Assets.Scripts.Presenters
 {
@@ -31,12 +34,12 @@ namespace Assets.Scripts.Presenters
             _view.ItemDetached -= OnItemDetached;
         }
 
-        private void OnGroupSplited(CubeGroup model)
+        private void OnGroupSplited(IEnumerable<Vector2> positions)
         {
-            _factory.Create(model);
+            _factory.Create(positions);
         }
 
-        private void OnItemDetached(CubeGroupItemView cubeView)
+        private void OnItemDetached(CubeGroupItem cubeView)
         {
             _model.Remove(cubeView.GroupPosition);
             cubeView.Free();

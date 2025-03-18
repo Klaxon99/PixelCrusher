@@ -1,40 +1,20 @@
-﻿using Assets.Scripts.Presenters;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SoundView : MonoBehaviour, IView, IPointerClickHandler
+
+namespace Assets.Scripts.Views
 {
-    [SerializeField] private SoundSwitcher _soundSwitcher;
-
-    private IPresenter _presenter;
-
-    public event Action Clicked;
-
-    public void Init(IPresenter presenter)
+    public class SoundView : View, IPointerClickHandler
     {
-        _presenter = presenter;
+        [SerializeField] private SoundSwitcher _soundSwitcher;
 
-        _presenter.Enable();
-    }
+        public event Action Clicked;
 
-    private void OnDisable()
-    {
-        _presenter.Disable();
-    }
+        public void OnPointerClick(PointerEventData eventData) => Clicked?.Invoke();
 
-    public void Mute()
-    {
-        _soundSwitcher.Mute();
-    }
+        public void Mute() => _soundSwitcher.Mute();
 
-    public void Unmute()
-    {
-        _soundSwitcher.Unmute();
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Clicked?.Invoke();
+        public void Unmute() => _soundSwitcher.Unmute();
     }
 }

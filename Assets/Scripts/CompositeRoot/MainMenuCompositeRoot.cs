@@ -1,6 +1,9 @@
+using Assets.Scripts.Factories;
 using Assets.Scripts.Models;
 using Assets.Scripts.Presenters;
 using Assets.Scripts.Services;
+using Assets.Scripts.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,6 +18,10 @@ namespace Assets.Scripts.CompositeRoot
         [SerializeField] private LevelUIContentView _levelUIContentView;
         [SerializeField] private LevelUIContentFactory _levelUIContentFactory;
 
+        [Header("Gun")]
+        [SerializeField] private List<GunLevel> _gunLevels;
+        [SerializeField] private GunImprovementsView _gunImprovementsView;
+
         [Header("Sound")]
         [SerializeField] private SoundSettings _soundSettings;
         [SerializeField] private SoundView _soundView;
@@ -22,12 +29,10 @@ namespace Assets.Scripts.CompositeRoot
         [Header("Wallet")]
         [SerializeField] private ValueView _valueView;
 
-        private PlayerData _playerData;
-        private Wallet _wallet;
-
         private void Start()
         {
-            ComposeSavesData();
+            ComposeWallet();
+            ComposeGunLevels();
             ComposeLevels();
             ComposeSound();
         }
@@ -39,34 +44,56 @@ namespace Assets.Scripts.CompositeRoot
             _soundView.Init(soundPresenter);
         }
 
-        private void ComposeSavesData()
+        private void ComposeWallet()
         {
-            if (YandexGame.savesData.idSave == 0)
+            int startSaveId = 0;
+
+            if (YandexGame.savesData.idSave == startSaveId)
             {
-                YandexGame.savesData.PlayerData = _playerData = new PlayerData(YandexGame.playerName, 0);
-                YandexGame.savesData.Wallet = _wallet = new Wallet(0);
-                YandexGame.savesData.GunImprovements = new List<string>();
-            }
-            else
-            {
-                _playerData = YandexGame.savesData.PlayerData;
-                _wallet = YandexGame.savesData.Wallet;
+                YandexGame.savesData.Wallet = new Wallet();
             }
 
-            YandexGame.SaveProgress();
+            WalletPresenter walletPresenter = new WalletPresenter(YandexGame.savesData.Wallet, _valueView);
 
-            _valueView.SetTextValue(_wallet.Count.ToString());
-            _valueView.Init(new WalletPresenter(_wallet, _valueView));
+            _valueView.Init(walletPresenter);
+        }
+
+        private void ComposeGunLevels()
+        {
+            GunLevel currentLevel = null;
+
+            foreach (GunLevel level in _gunLevels)
+            {
+                level.SetLang(YandexGame.lang);
+
+                if (level.Number == YandexGame.savesData.GunLevel)
+                {
+                    currentLevel = level;
+                }
+            }
+
+            if (currentLevel == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            GunLevelImprover gunLevelImprover = new GunLevelImprover(currentLevel);
+            ImprovementsSaver dataSaver = new ImprovementsSaver(YandexGame.savesData.Wallet, gunLevelImprover);
+
+            _gunImprovementsView.Init(new GunLevelPresenter(gunLevelImprover, YandexGame.savesData.Wallet, _gunImprovementsView, dataSaver));
         }
 
         private void ComposeLevels()
         {
             _levelsStorage.Init();
-            LevelUIContent levelUIContent = new LevelUIContent(_levelsStorage, _playerData);
-            IEnumerable<LevelUIItemView> availableLevels = levelUIContent.GetAvailableLevels.Select(item => _levelUIContentFactory.Create(item, _levelUIContentView.RectTransform, true));
-            IEnumerable<LevelUIItemView> privateLevels = levelUIContent.GetPrivateLevels.Select(item => _levelUIContentFactory.Create(item, _levelUIContentView.RectTransform, false));
+            LevelUIContent levelUIContent = new LevelUIContent(_levelsStorage.Items, YandexGame.savesData.LastPassedLevelId);
             SceneLoader sceneLoader = new SceneLoader(_levelsStorage);
             LevelUIContentPresenter levelUIContentPresenter = new LevelUIContentPresenter(levelUIContent, _levelUIContentView, sceneLoader);
+
+            IEnumerable<LevelUIItem> availableLevels = levelUIContent.AvailableLevels.Values
+                .Select(level => _levelUIContentFactory.Create(level, _levelUIContentView.RectTransform, true));
+            IEnumerable<LevelUIItem> privateLevels = levelUIContent.PrivateLevels
+                .Select(level => _levelUIContentFactory.Create(level, _levelUIContentView.RectTransform, false));
 
             _levelUIContentView.SetContent(availableLevels.Union(privateLevels));
             _levelUIContentView.Init(levelUIContentPresenter);

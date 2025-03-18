@@ -1,15 +1,17 @@
 ﻿using Assets.Scripts.Factories;
 using Assets.Scripts.Models;
 using Assets.Scripts.Presenters;
+using Assets.Scripts.Views;
 using Assets.Scripts.Services;
 using UnityEngine;
+using YG;
 
 namespace Assets.Scripts.CompositeRoot
 {
     public class LevelCompositeRoot : MonoBehaviour
     {
         [Header("Input")]
-        [SerializeField] private UIInput _input;
+        [SerializeField] private GunInput _input;
 
         [Header("Gun")]
         [SerializeField] private Transform _gunSpawnPoint;
@@ -33,19 +35,42 @@ namespace Assets.Scripts.CompositeRoot
         [SerializeField] private PauseMenuView _pauseMenuView;
         [SerializeField] private EndGameScreenView _endGameScreenView;
         [SerializeField] private LevelsStorage _levelsStorage;
+        [SerializeField] private BonusView _bonusView;
 
         private Score _score;
-        private PauseSwitcher _pauseSwitcher;
+        private RewardBonusService _rewardBonusService;
+        private LeaderBoardService _leaderBoardService;
+        private GameMission _gameMission;
 
-        private void Awake()
+        private void Start()
         {
+            _input.Init();
+            _levelBounds.Init();
+
             ComposeCubeGroup();
             ComposeScore();
+            ComposeServices();
             ComposeSound();
-
-            _levelBounds.Init();
             ComposeGun();
             ComposeGame();
+        }
+
+        private void OnDisable()
+        {
+            _rewardBonusService.Stop();
+            _leaderBoardService.Stop();
+            _gameMission.Stop();
+        }
+
+        private void ComposeServices()
+        {
+            _rewardBonusService = new RewardBonusService();
+            _leaderBoardService = new LeaderBoardService();
+            _gameMission = new GameMission(_score);
+
+            _rewardBonusService.Start();
+            _leaderBoardService.Start();
+            _gameMission.Start();
         }
 
         private void ComposeScore()
@@ -59,14 +84,13 @@ namespace Assets.Scripts.CompositeRoot
         {
             _cubesForm.Init();
             CubeGroupFactory factory = new CubeGroupFactory(_cubesForm);
-            factory.Create(new CubeGroup(_cubesForm.ItemsPositions));
+            factory.Create(_cubesForm.ItemsPositions);
         }
 
         private void ComposeGun()
         {
-            _input.Init();
             _gunFactory.Init();
-            _gunFactory.Create(new SpaceOrientation(_gunSpawnPoint.position, _gunSpawnPoint.rotation));
+            _gunFactory.Create(new SpaceOrientation(_gunSpawnPoint.position, _gunSpawnPoint.rotation), YandexGame.savesData.GunLevel);
         }
 
         private void ComposeSound()
@@ -79,18 +103,18 @@ namespace Assets.Scripts.CompositeRoot
         private void ComposeGame()
         {
             _levelsStorage.Init();
-            _pauseSwitcher = new PauseSwitcher();
-            GameMission gameMission = new GameMission(_score);
+            
             SceneLoader sceneLoader = new SceneLoader(_levelsStorage);
-            DataSaver dataSaver = new DataSaver(_score);
+            GameplaySaver dataSaver = new GameplaySaver(_score, _leaderBoardService);
 
-            PausePresnter pausePresnter = new PausePresnter(_pauseSwitcher, _pauseMenuView, sceneLoader);
-            _pauseMenuView.Hide();
+            PauseSwitcher pauseSwitcher = new PauseSwitcher();
+            PausePresnter pausePresnter = new PausePresnter(pauseSwitcher, _pauseMenuView, sceneLoader);
             _pauseMenuView.Init(pausePresnter);
 
-            EndGamePresenter endGameScreenPresenter = new EndGamePresenter(gameMission, dataSaver, _endGameScreenView, sceneLoader);
-            _pauseMenuView.Hide();
-            _endGameScreenView.Init(endGameScreenPresenter);
+            EndGamePresenter endGamePresenter = new EndGamePresenter(_gameMission, dataSaver, _endGameScreenView, sceneLoader);
+            _endGameScreenView.Init(endGamePresenter);
+
+            _bonusView.Init(new BonusPresenter(YandexGame.savesData.Wallet, _score, _bonusView, _rewardBonusService, _gameMission));
         }
     }
 }

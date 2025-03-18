@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9488c24acd3ef594a9f8ad779f9fdcf1, type: 3}
   m_Name: ScreamingCat
   m_EditorClassIdentifier: 
-  <Image>k__BackingField: {fileID: 0}
+  <Image>k__BackingField: {fileID: 21300000, guid: 5256431fdaf9d7e4391132ae89c9b226, type: 3}
   <SceneName>k__BackingField: ScreamingCat
-  <SceneId>k__BackingField: 12
-  NextLevel: {fileID: 0}
+  <SceneId>k__BackingField: 10
+  <NextLevel>k__BackingField: {fileID: 11400000, guid: 48ed25c9838cb384fb118c8fbc45db6a, type: 2}

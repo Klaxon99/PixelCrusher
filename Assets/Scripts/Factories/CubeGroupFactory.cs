@@ -3,6 +3,8 @@ using UnityEngine;
 using Assets.Scripts.Models;
 using System.Linq;
 using Assets.Scripts.Presenters;
+using System.Collections.Generic;
+using Assets.Scripts.Views;
 
 namespace Assets.Scripts.Factories
 {
@@ -15,13 +17,14 @@ namespace Assets.Scripts.Factories
             _cubeStorage = cubeStorage ?? throw new ArgumentNullException();
         }
 
-        public CubeGroupView Create(CubeGroup model)
+        public CubeGroupView Create(IEnumerable<Vector2> cubesPositions)
         {
+            CubeGroup cubeGroup = new CubeGroup(cubesPositions);
             CubeGroupView view = new GameObject("CubeGroup").AddComponent<CubeGroupView>();
-            CubeGroupPresenter cubeGroupPresenter = new CubeGroupPresenter(model, view, this);
+            CubeGroupPresenter presenter = new CubeGroupPresenter(cubeGroup, view, this);
 
-            view.Init(cubeGroupPresenter);
-            view.SetChilds(model.Items.Select(item => _cubeStorage.GetItem(item)));
+            view.Init(presenter);
+            view.SetChilds(cubeGroup.Items.Select(item => _cubeStorage.GetItem(item)));
 
             return view;
         }

@@ -1,75 +1,43 @@
-﻿using Assets.Scripts.Presenters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent(typeof(RectTransform))]
-public class LevelUIContentView : PopUpView, IView
+namespace Assets.Scripts.Views
 {
-    [SerializeField] private Button _closeButton;
-    [SerializeField] private Button _openButton;
-    [SerializeField] private RectTransform _parent;
-
-    private List<LevelUIItemView> _contentItems;
-    private IPresenter _presenter;
-
-    public event Action<Level> LevelSelected;
-
-    public event Action CloseButtonClicked;
-
-    public event Action OpenButtonClicked;
-
-    public RectTransform RectTransform => _parent;
-
-    public void Init(IPresenter presenter)
+    public class LevelUIContentView : PopUpControlledView
     {
-        _presenter = presenter;
+        [SerializeField] private RectTransform _parent;
 
-        _presenter.Enable();
-        _closeButton.onClick.AddListener(OnCloseButtonClicked);
-        _openButton.onClick.AddListener(OnOpenButtonClicked);
-    }
+        private List<LevelUIItem> _contentItems;
 
-    private void OnDisable()
-    {
-        foreach (LevelUIItemView item in _contentItems)
+        public event Action<int> LevelSelected;
+
+        public RectTransform RectTransform => _parent;
+
+        protected override void OnDisable()
         {
-            item.Clicked -= OnLevelSelected;
+            base.OnDisable();
+
+            foreach (LevelUIItem item in _contentItems)
+            {
+                item.Clicked -= OnLevelSelected;
+            }
         }
 
-        _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
-        _openButton.onClick.RemoveListener(OnOpenButtonClicked);
-
-        _presenter.Disable();
-    }
-
-    public void SetContent(IEnumerable<LevelUIItemView> items)
-    {
-        _contentItems = new List<LevelUIItemView>();
-
-        foreach (LevelUIItemView item in items)
+        public void SetContent(IEnumerable<LevelUIItem> items)
         {
-            if (item.IsActive)
+            _contentItems = new List<LevelUIItem>();
+
+            foreach (LevelUIItem item in items)
             {
                 item.Clicked += OnLevelSelected;
                 _contentItems.Add(item);
             }
         }
-    }
 
-    private void OnOpenButtonClicked()
-    {
-        OpenButtonClicked?.Invoke();
-    }
-
-    private void OnCloseButtonClicked()
-    {
-        CloseButtonClicked?.Invoke();
-    }
-
-    private void OnLevelSelected(Level level)
-    {
-        LevelSelected?.Invoke(level);
+        private void OnLevelSelected(int levelId)
+        {
+            LevelSelected?.Invoke(levelId);
+        }
     }
 }

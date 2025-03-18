@@ -27,7 +27,7 @@ namespace YG.Insides
             {
                 objectsTranlate.Clear();
 
-                foreach (LanguageYG obj in SceneAsset.FindObjectsByType<LanguageYG>(FindObjectsSortMode.None))
+                foreach (Language obj in SceneAsset.FindObjectsByType<Language>(FindObjectsSortMode.None))
                 {
                     objectsTranlate.Add(obj.gameObject);
                 }
@@ -39,7 +39,7 @@ namespace YG.Insides
             {
                 foreach (GameObject obj in Selection.gameObjects)
                 {
-                    if (obj.GetComponent<LanguageYG>())
+                    if (obj.GetComponent<Language>())
                     {
                         bool check = false;
                         for (int i = 0; i < objectsTranlate.Count; i++)
@@ -81,7 +81,7 @@ namespace YG.Insides
 
                     for (int i = 0; i < objectsTranlate.Count; i++)
                     {
-                        LanguageYG scr = objectsTranlate[i].GetComponent<LanguageYG>();
+                        Language scr = objectsTranlate[i].GetComponent<Language>();
 
                         if (CSVManager.GetKeyForLangYG(scr) == null || CSVManager.GetKeyForLangYG(scr) == "")
                         {
@@ -103,11 +103,11 @@ namespace YG.Insides
 
                 if (GUILayout.Button("Export", GUILayout.Height(30)))
                 {
-                    List<LanguageYG> langObj = new List<LanguageYG>();
+                    List<Language> langObj = new List<Language>();
 
                     for (int i = 0; i < objectsTranlate.Count; i++)
                     {
-                        LanguageYG scr = objectsTranlate[i].GetComponent<LanguageYG>();
+                        Language scr = objectsTranlate[i].GetComponent<Language>();
                         string textScr = null;
 
                         if (scr.componentTextField)
@@ -143,7 +143,7 @@ namespace YG.Insides
                         }
 
                         bool clon = false;
-                        foreach (LanguageYG l in langObj)
+                        foreach (Language l in langObj)
                         {
                             if (l != null)
                             {

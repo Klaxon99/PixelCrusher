@@ -3,44 +3,39 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Transform))]
-[RequireComponent(typeof(Rigidbody))]
-public class CubeGroupView : MonoBehaviour, IView, ICubeGroup
+namespace Assets.Scripts.Views
 {
-    private Transform _transform;
-    private Rigidbody _rigidbody;
-    private RigidbodyConstraints _constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
-    private IPresenter _presenter;
-
-    public event Action<CubeGroupItemView> ItemDetached;
-
-    public void Init(IPresenter presenter)
+    [RequireComponent(typeof(Transform))]
+    [RequireComponent(typeof(Rigidbody))]
+    public class CubeGroupView : View, ICubeGroup
     {
-        _transform = transform;
-        _presenter = presenter;
-        _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.constraints = _constraints;
+        private Transform _transform;
+        private Rigidbody _rigidbody;
+        private RigidbodyConstraints _constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 
-        presenter.Enable();
-    }
+        public event Action<CubeGroupItem> ItemDetached;
 
-    public void SetChilds(IEnumerable<CubeGroupItemView> items)
-    {
-        foreach (CubeGroupItemView item in items)
+        public override void Init(IPresenter presenter)
         {
-            _rigidbody.mass++;
-
-            item.SetParentGroup(this, _transform);
+            base.Init(presenter);
+            _transform = transform;
+            _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody.constraints = _constraints;
         }
-    }
 
-    private void OnDisable()
-    {
-        _presenter.Disable();
-    }
+        public void SetChilds(IEnumerable<CubeGroupItem> items)
+        {
+            foreach (CubeGroupItem item in items)
+            {
+                _rigidbody.mass++;
 
-    public void Detach(CubeGroupItemView cubeGroupItemView)
-    {
-        ItemDetached?.Invoke(cubeGroupItemView);
+                item.SetParentGroup(this, _transform);
+            }
+        }
+
+        public void Detach(CubeGroupItem cubeGroupItemView)
+        {
+            ItemDetached?.Invoke(cubeGroupItemView);
+        }
     }
 }

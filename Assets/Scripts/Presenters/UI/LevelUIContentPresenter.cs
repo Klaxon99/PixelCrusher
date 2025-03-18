@@ -1,64 +1,42 @@
 ﻿using Assets.Scripts.Models;
 using Assets.Scripts.Services;
+using Assets.Scripts.Views;
 
 namespace Assets.Scripts.Presenters
 {
-    public class LevelUIContentPresenter : IPresenter
+    public class LevelUIContentPresenter : PopupPresenter<LevelUIContentView>
     {
-        private readonly PopUpModel _model;
-        private readonly LevelUIContentView _view;
+        private readonly LevelUIContent _model;
         private readonly SceneLoader _sceneLoader;
 
-        public LevelUIContentPresenter(PopUpModel model, LevelUIContentView view, SceneLoader sceneLoader)
+        public LevelUIContentPresenter(LevelUIContent model, LevelUIContentView view, SceneLoader sceneLoader) : base(view)
         {
             _model = model;
-            _view = view;
             _sceneLoader = sceneLoader;
         }
 
-        public void Enable()
+        public override void Enable()
         {
-            _model.Opened += OnOpened;
-            _model.Closed += OnClosed;
-            _view.LevelSelected += OnLevelSelected;
-            _view.OpenButtonClicked += OnOpenButtonClicked;
-            _view.CloseButtonClicked += OnCloseButtonClicked;
+            base.Enable();
 
-            _model.Hide();
+            View.LevelSelected += OnLevelSelected;
+
+            View.Hide();
         }
 
-        public void Disable()
+        public override void Disable()
         {
-            _model.Opened -= OnOpened;
-            _model.Closed -= OnClosed;
-            _view.LevelSelected -= OnLevelSelected;
-            _view.OpenButtonClicked -= OnOpenButtonClicked;
-            _view.CloseButtonClicked -= OnCloseButtonClicked;
+            base.Disable();
+
+            View.LevelSelected -= OnLevelSelected;
         }
 
-        private void OnClosed()
+        private void OnLevelSelected(int levelId)
         {
-            _view.Hide();
-        }
-
-        private void OnOpened()
-        {
-            _view.Show();
-        }
-
-        private void OnCloseButtonClicked()
-        {
-            _model.Hide();
-        }
-
-        private void OnOpenButtonClicked()
-        {
-            _model.Show();
-        }
-
-        private void OnLevelSelected(Level level)
-        {
-            _sceneLoader.LoadLevel(level);
+            if (_model.AvailableLevels.ContainsKey(levelId))
+            {
+                _sceneLoader.LoadLevel(_model.AvailableLevels[levelId]);
+            }
         }
     }
 }

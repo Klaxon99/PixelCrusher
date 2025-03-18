@@ -21,9 +21,9 @@ namespace YG
         }
 
         [SerializeField] private string _additionalText;
-        private LanguageYG langYG;
+        private Language langYG;
 
-        public void AssignAdditionalText(LanguageYG languageYG)
+        public void AssignAdditionalText(Language languageYG)
         {
             langYG = languageYG;
             DoAssignAdditionalText();

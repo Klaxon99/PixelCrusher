@@ -6,7 +6,7 @@ public class CellContainer : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     [SerializeField] private Material _selectedMaterial;
     [SerializeField] private Material _unselectedMaterial;
-    [SerializeField] private CubeGroupItemView _prefab;
+    [SerializeField] private CubeGroupItem _prefab;
 
     private Dictionary<int, Cell> _items;
     private UndoDrawing _undoDrawing;
@@ -75,7 +75,7 @@ public class CellContainer : MonoBehaviour, IDragHandler, IEndDragHandler
         foreach (Cell cell in _items.Values)
         {
             Vector3 position = new Vector3(cell.Id % 30, cell.Id / 30, 0f);
-            CubeGroupItemView cubeGroupItemView = Instantiate(_prefab, position, Quaternion.identity, transform);
+            CubeGroupItem cubeGroupItemView = Instantiate(_prefab, position, Quaternion.identity, transform);
             cubeGroupItemView.GetComponent<MeshRenderer>().material = cell.Material;
         }
     }

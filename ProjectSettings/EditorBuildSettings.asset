@@ -13,35 +13,74 @@ EditorBuildSettings:
     guid: 96afae73e340ed7448662e51cb7e140c
   - enabled: 1
     path: Assets/Scenes/Orange.unity
-    guid: 6f4b8f2ff053e5141a59f37b689fdd7e
+    guid: 3461c4ce53bde1d47a6fae2e35386366
   - enabled: 1
     path: Assets/Scenes/Avocado.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: c10fc13172f2685468a09a52aabb1326
   - enabled: 1
-    path: Assets/Scenes/America.unity
-    guid: ae9e8129580342042abe3ed21c7de8a3
+    path: Assets/Scenes/Eggplant.unity
+    guid: 3fbd0e2f554cec64ba32fb00126329b8
   - enabled: 1
-    path: Assets/Scenes/SpiderMan.unity
-    guid: 2715cdc1b3d115647b5b7c706ca2e64d
+    path: Assets/Scenes/Grape.unity
+    guid: e9abb3b5a96edb94a97c8d75d19eba41
   - enabled: 1
-    path: Assets/Scenes/Minion.unity
-    guid: d65d65572d3322945b455f3d82e4d4a0
+    path: Assets/Scenes/Qiwi.unity
+    guid: 5ae822e59c4ce3f4aa386d97d459b88a
   - enabled: 1
-    path: Assets/Scenes/AmongUs.unity
-    guid: 8f73a0b64ce735d4f90d597df5e5a186
+    path: Assets/Scenes/Patato.unity
+    guid: 30253afd88c2cc7459d130ff94ec552b
   - enabled: 1
-    path: Assets/Scenes/AngryBird.unity
-    guid: 09e7b1f4b98cbd845b849cb1ed4dcfa3
+    path: Assets/Scenes/Capybara.unity
+    guid: c11bd6af31205bc42b9295c0855ae507
   - enabled: 1
-    path: Assets/Scenes/Dragon.unity
-    guid: 45626c658c99745409bc5f5aae1851e9
-  - enabled: 1
-    path: Assets/Scenes/Pig.unity
-    guid: a35b681b6c9650c439bfc3ae5c9eadd9
-  - enabled: 1
-    path: Assets/Scenes/SquidGame.unity
-    guid: 6bc16c745b4de354397784d4a3a4a664
+    path: Assets/Scenes/Frog.unity
+    guid: 6a57b1e667c0d5c46a888dc012a30547
   - enabled: 1
     path: Assets/Scenes/ScreamingCat.unity
-    guid: e38fb3e2252c078438bde4aa8bc8b7ab
+    guid: 3fa4912d050863045895e8da0a46f899
+  - enabled: 1
+    path: Assets/Scenes/Dog.unity
+    guid: 0b181f15fb5d97d4882c8b53dfe1ac0c
+  - enabled: 1
+    path: Assets/Scenes/Hamster.unity
+    guid: 1b27fe2c14a06284c90609b3b88a1620
+  - enabled: 1
+    path: Assets/Scenes/Kraken.unity
+    guid: 6875b68590b6edf46b9b6909a41aa531
+  - enabled: 1
+    path: Assets/Scenes/MemCat.unity
+    guid: 97dc86f45f254594a8c861d4c5beccb5
+  - enabled: 1
+    path: Assets/Scenes/Saw.unity
+    guid: 08dba719f51e4104ea0ddbb7c35d6a8b
+  - enabled: 1
+    path: Assets/Scenes/SweetCat.unity
+    guid: 9b9e9c49cfada184b8f58d803f33845f
+  - enabled: 1
+    path: Assets/Scenes/Kurama.unity
+    guid: 8cc94e5c750a8fb46b464c43572ac60d
+  - enabled: 1
+    path: Assets/Scenes/Pumpkin.unity
+    guid: bdf91246d3f05fc4ea7ae1e057667799
+  - enabled: 1
+    path: Assets/Scenes/Dragon.unity
+    guid: 031dc85ff5a1bdd459b55a60509fcb2e
+  - enabled: 1
+    path: Assets/Scenes/Pacman.unity
+    guid: 6f4ad4797e09b1945a9930a451e2463d
+  - enabled: 1
+    path: Assets/Scenes/AmongUs.unity
+    guid: 33186d3a2e0bcf841a8edbc1513482fc
+  - enabled: 1
+    path: Assets/Scenes/SquidGame.unity
+    guid: cb1189ab9708d6844aae4c4bebcb51da
+  - enabled: 1
+    path: Assets/Scenes/R2D2.unity
+    guid: fadc9cb3c886bb74e8b16a9e8317d37b
+  - enabled: 1
+    path: Assets/Scenes/Droid.unity
+    guid: 3aee0fe047cf2b747862bd63aeda24fa
+  - enabled: 1
+    path: Assets/Scenes/Yoda.unity
+    guid: 758bf3f46f47a6e48ae1ef088a72e8ce
   m_configObjects: {}

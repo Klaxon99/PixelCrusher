@@ -7,6 +7,8 @@ namespace Assets.Scripts.Models
 {
     public class CubeGroup
     {
+        private const int GridStep = 1;
+
         private HashSet<Vector2> _cubeMap;
 
         public CubeGroup(IEnumerable<Vector2> items)
@@ -16,7 +18,7 @@ namespace Assets.Scripts.Models
 
         public event Action Emptied;
 
-        public event Action<CubeGroup> Splited;
+        public event Action<IEnumerable<Vector2>> Splited;
 
         public IEnumerable<Vector2> Items => _cubeMap;
 
@@ -48,7 +50,7 @@ namespace Assets.Scripts.Models
 
             if (_cubeMap.Count > 0)
             {
-                Splited?.Invoke(new CubeGroup(touchedItems));
+                Splited?.Invoke(touchedItems);
             }
             else
             {
@@ -71,10 +73,10 @@ namespace Assets.Scripts.Models
             touchedPosition.Add(currentPosition);
             targetPositions.Remove(currentPosition);
 
-            SearchNeighbours(new Vector2(currentPosition.x + 1, currentPosition.y), touchedPosition, targetPositions);
-            SearchNeighbours(new Vector2(currentPosition.x, currentPosition.y + 1), touchedPosition, targetPositions);
-            SearchNeighbours(new Vector2(currentPosition.x - 1, currentPosition.y), touchedPosition, targetPositions);
-            SearchNeighbours(new Vector2(currentPosition.x, currentPosition.y - 1), touchedPosition, targetPositions);
+            SearchNeighbours(new Vector2(currentPosition.x + GridStep, currentPosition.y), touchedPosition, targetPositions);
+            SearchNeighbours(new Vector2(currentPosition.x, currentPosition.y + GridStep), touchedPosition, targetPositions);
+            SearchNeighbours(new Vector2(currentPosition.x - GridStep, currentPosition.y), touchedPosition, targetPositions);
+            SearchNeighbours(new Vector2(currentPosition.x, currentPosition.y - GridStep), touchedPosition, targetPositions);
         }
     }
 }

@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddf4911028eaa6443b96e36a9e4a6c77, type: 3}
+  m_Script: {fileID: 11500000, guid: 25bc3c196b172f74e83798cf73e91c9c, type: 3}
   m_Name: ProjectileSettings
   m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 565500961352541880, guid: 71ba440dd3f85e4489bfeceffd8fe207, type: 3}
-  _interactionRadius: 0.7
-  _interactionForce: 5
-  _speed: 10
+  <ProjectilePrefab>k__BackingField: {fileID: 565500961352541880, guid: 71ba440dd3f85e4489bfeceffd8fe207, type: 3}
+  <InteractionRadius>k__BackingField: 1
+  <InteractionForce>k__BackingField: 12
+  <Speed>k__BackingField: 10

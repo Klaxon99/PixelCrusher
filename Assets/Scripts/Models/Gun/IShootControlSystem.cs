@@ -1,6 +1,9 @@
 ﻿using System;
 
-public interface IShootControlSystem
+namespace Assets.Scripts.Models
 {
-    public void TryShoot(Action shootAction);
+    public interface IShootControlSystem
+    {
+        public void TryShoot(Action shootAction, ITimer timers);
+    }
 }

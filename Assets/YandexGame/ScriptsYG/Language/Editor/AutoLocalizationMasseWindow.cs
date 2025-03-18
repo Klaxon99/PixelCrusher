@@ -50,7 +50,7 @@ namespace YG.Insides
                 {
                     objectsTranlate.Clear();
 
-                    foreach (LanguageYG obj in SceneAsset.FindObjectsByType<LanguageYG>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                    foreach (Language obj in SceneAsset.FindObjectsByType<Language>(FindObjectsInactive.Include, FindObjectsSortMode.None))
                     {
                         objectsTranlate.Add(obj.gameObject);
                     }
@@ -105,10 +105,10 @@ namespace YG.Insides
                     {
                         foreach (GameObject obj in objectsTranlate)
                         {
-                            LanguageYG scrAL = obj.GetComponent<LanguageYG>();
+                            Language scrAL = obj.GetComponent<Language>();
 
                             if (scrAL == null)
-                                scrAL = obj.AddComponent<LanguageYG>();
+                                scrAL = obj.AddComponent<Language>();
 
                             scrAL.Serialize();
                             scrAL.componentTextField = true;
@@ -122,7 +122,7 @@ namespace YG.Insides
                     {
                         foreach (GameObject obj in objectsTranlate)
                         {
-                            LanguageYG scrAL = obj.GetComponent<LanguageYG>();
+                            Language scrAL = obj.GetComponent<Language>();
 
                             if (scrAL)
                                 DestroyImmediate(scrAL);
@@ -133,7 +133,7 @@ namespace YG.Insides
                     {
                         foreach (GameObject obj in objectsTranlate)
                         {
-                            LanguageYG scrAL = obj.GetComponent<LanguageYG>();
+                            Language scrAL = obj.GetComponent<Language>();
 
                             if (scrAL)
                                 scrAL.Serialize();

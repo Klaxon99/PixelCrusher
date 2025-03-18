@@ -3,52 +3,31 @@ using UnityEngine.UI;
 using System;
 using Assets.Scripts.Presenters;
 
-public class PauseMenuView : PopUpView, IView
+namespace Assets.Scripts.Views
 {
-    [SerializeField] private Button _openButton;
-    [SerializeField] private Button _closeButton;
-    [SerializeField] private Button _mainMenuButton;
-    [SerializeField] private SoundView _soundView;
-
-    private IPresenter _presenter;
-
-    public event Action CloseButtonClicked;
-    
-    public event Action MainMenuButtonClicked;
-
-    public event Action OpenButtonClicked;
-
-    public void Init(IPresenter presenter)
+    public class PauseMenuView : PopUpControlledView
     {
-        _presenter = presenter;
+        [SerializeField] private Button _mainMenuButton;
 
-        _closeButton.onClick.AddListener(OnCloseButtonClicked);
-        _mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
-        _openButton.onClick.AddListener(OnOpenButtonClicked);
+        public event Action MainMenuButtonClicked;
 
-        _presenter.Enable();
-    }
+        public override void Init(IPresenter presenter)
+        {
+            base.Init(presenter);
 
-    private void OnDisable()
-    {
-        _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
-        _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonClicked);
+            _mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        }
 
-        _presenter.Disable();
-    }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
 
-    private void OnOpenButtonClicked()
-    {
-        OpenButtonClicked?.Invoke();
-    }
+            _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonClicked);
+        }
 
-    private void OnMainMenuButtonClicked()
-    {
-        MainMenuButtonClicked?.Invoke();
-    }
-
-    private void OnCloseButtonClicked()
-    {
-        CloseButtonClicked?.Invoke();
+        private void OnMainMenuButtonClicked()
+        {
+            MainMenuButtonClicked?.Invoke();
+        }
     }
 }

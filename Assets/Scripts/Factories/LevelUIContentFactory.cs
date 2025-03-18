@@ -1,16 +1,19 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "LevelUIContentFactory", menuName = "UIContent/LevelUIContentFactory")]
-public class LevelUIContentFactory : ScriptableObject
+namespace Assets.Scripts.Factories
 {
-    [SerializeField] private LevelUIItemView _prefab;
-
-    public LevelUIItemView Create(Level level, RectTransform parent, bool isActive)
+    [CreateAssetMenu(fileName = "LevelUIContentFactory", menuName = "UIContent/LevelUIContentFactory")]
+    public class LevelUIContentFactory : ScriptableObject
     {
-        LevelUIItemView contentView = Instantiate(_prefab, parent);
+        [SerializeField] private LevelUIItem _prefab;
 
-        contentView.Init(level, isActive);
+        public LevelUIItem Create(Level level, RectTransform parent, bool isActive)
+        {
+            LevelUIItem contentView = Instantiate(_prefab, parent);
 
-        return contentView;
+            contentView.Init(level.SceneId, level.Image, isActive);
+
+            return contentView;
+        }
     }
 }

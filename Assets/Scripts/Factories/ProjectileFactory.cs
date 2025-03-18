@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Models;
 using Assets.Scripts.Presenters;
-using UnityEngine;
+using Assets.Scripts.Views;
 
 namespace Assets.Scripts.Factories
 {
@@ -17,12 +17,16 @@ namespace Assets.Scripts.Factories
 
         public ProjectileView Create(SpaceOrientation spaceOrientation)
         {
+            Projectile projectile = new Projectile(spaceOrientation.Rotation, 
+                _projectileSettings.Speed,
+                _projectileSettings.InteractionRadius, 
+                _projectileSettings.InteractionForce);
+
             ProjectileView view = _pool.GetItem();
             view.gameObject.SetActive(true);
             view.SetOrientation(spaceOrientation);
-            view.SetVelocityDirection(spaceOrientation.Rotation * Vector3.forward);
-            view.SetSpeed(_projectileSettings.Speed);
-            ProjectilePresenter projectilePresenter = new ProjectilePresenter(view, this, _projectileSettings);
+            view.SetVelocity(projectile.Velocity);
+            ProjectilePresenter projectilePresenter = new ProjectilePresenter(projectile, view, this);
 
             view.Init(projectilePresenter);
 
